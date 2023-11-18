@@ -17,7 +17,7 @@ public class ZleceniodawcaGUI extends JFrame {
     JLabel lNazwaSkroconaZleceniodawcy,lZleceniodawca,lMiasto,lKodPocztowy,lUlica,lUkosnik,lNip,lTelefonKomorkowy,lTelefonStacjonarny;
    LimitowanyText tNazwaSkroconaZleceniodawcy,tMiasto,tKodPocztowy,tUlica,tNumerDomu,tNumerMieszkania,tKraj,tTelefonStacjonarny,tTelefonKomorkowy;
     String NazwaSkroconaZleceniodawcy,Miasto,KodPocztowy,Ulica,NumerDomu,NumerMieszkania,Nip,Kraj,TelefonStacjonarny,TelefonKomorkowy,PelnaNazwaZleceniodawcy;
-    JTextArea aPelnaNazwaZleceniodawcy;
+    LimitowanyTextArea aPelnaNazwaZleceniodawcy;
     JButton bZapisz,bWyjdz;
     String SprawdzNazweSkrocona,SprawdzPelnaNazweZleceniodawcy;
     LimitowanyText tNip;
@@ -121,7 +121,7 @@ int ID;
         tTelefonKomorkowy.setCaretPosition(0);
         tMiasto=new LimitowanyText(40,false);
         tMiasto.setCaretPosition(0);
-        aPelnaNazwaZleceniodawcy=new JTextArea();
+        aPelnaNazwaZleceniodawcy=new LimitowanyTextArea(100);
 
 
         WysweitlNapis(lNazwaSkroconaZleceniodawcy,"Nazwa skrócona zleceniodawcy",20,0,200,20,panel);

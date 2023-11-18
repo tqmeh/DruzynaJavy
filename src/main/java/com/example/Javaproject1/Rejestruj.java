@@ -10,7 +10,7 @@ import java.util.List;
 @Component
 public class Rejestruj extends JFrame {
     JLabel lLogin,lHaslo,lPowtorzHaslo,lMail,lPowtorzMail;
-    JTextField tLogin,tMail,tPowtorzMail;
+    LimitowanyText tLogin,tMail,tPowtorzMail;
     JPasswordField pHaslo,pPowtorzHaslo;
 
     JButton bRejestruj,bWyjdz;
@@ -23,6 +23,7 @@ public class Rejestruj extends JFrame {
     @Autowired
     public Rejestruj(PersonRepository personRepository,PasswordEncoder passwordEncoder,EncryptionService encryptionService)
     {
+
         this.personRepository=personRepository;
         this.passwordEncoder=passwordEncoder;
         this.encryptionService=encryptionService;
@@ -34,11 +35,11 @@ public class Rejestruj extends JFrame {
         lPowtorzHaslo=new JLabel();
         lMail=new JLabel();
         lPowtorzMail=new JLabel();
-        tLogin=new JTextField();
+        tLogin=new LimitowanyText(20,false);
         pHaslo=new JPasswordField();
         pPowtorzHaslo=new JPasswordField();
-        tMail=new JTextField();
-        tPowtorzMail=new JTextField();
+        tMail=new LimitowanyText(40,false);
+        tPowtorzMail=new LimitowanyText(40,false);
         bRejestruj=new JButton();
         bWyjdz=new JButton();
 
@@ -169,5 +170,13 @@ public void SprawdzLogin()
                 JOptionPane.ERROR_MESSAGE
         );
     }
+public void Czysc()
+{
+    tLogin.setText("");
+    pHaslo.setText("");
+    pPowtorzHaslo.setText("");
+    tMail.setText("");
+    tPowtorzMail.setText("");
 
+}
 }

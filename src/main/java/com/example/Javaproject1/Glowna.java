@@ -34,7 +34,7 @@ public class Glowna extends JFrame {
         this.encryptionService=encryptionService;
 
         setSize (400,200);
-        setTitle("Logowanie");
+        setTitle("Glowna");
         setExtendedState(MAXIMIZED_BOTH);
 
         panel1=StworzPanel1();
@@ -190,19 +190,19 @@ public class Glowna extends JFrame {
         zlecenieGUI.aUwagiSerwisanta.setText(" ");
 
         int WybranyWiersz=tTabela.getSelectedRow();
-        System.out.println("Wybrany wiersz to "+WybranyWiersz);
-        Zlecenie edytowaneZlecenie1 = zlecenieRepository.findByNumer((Integer) tTabela.getValueAt(WybranyWiersz, 0)).orElse(null);
+        if(WybranyWiersz!=-1) {
+            System.out.println("Wybrany wiersz to " + WybranyWiersz);
+            Zlecenie edytowaneZlecenie1 = zlecenieRepository.findByNumer((Integer) tTabela.getValueAt(WybranyWiersz, 0)).orElse(null);
 
-        if(edytowaneZlecenie1!=null)
-        {
-            ID=edytowaneZlecenie1.getNumer();
-            System.out.println(ID);
-            zlecenieGUI.UzupelnijDaneEdycji(edytowaneZlecenie1);
-            SwingUtilities.invokeLater(zlecenieGUI::PobierzDanezTabeli);
-            zlecenieGUI.setVisible(true);
-            zlecenieGUI.setNumer1(ID);
+            if (edytowaneZlecenie1 != null) {
+                ID = edytowaneZlecenie1.getNumer();
+                System.out.println(ID);
+                zlecenieGUI.UzupelnijDaneEdycji(edytowaneZlecenie1);
+                SwingUtilities.invokeLater(zlecenieGUI::PobierzDanezTabeli);
+                zlecenieGUI.setVisible(true);
+                zlecenieGUI.setNumer1(ID);
+            }
         }
-
     }
 
 

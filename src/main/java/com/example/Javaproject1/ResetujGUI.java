@@ -61,12 +61,13 @@ public class ResetujGUI extends JFrame {
             SprawdzCzyLoginIstnieje();
             Sprawdz();
 
+
             Optional<Person> optionalPerson = personRepository.findByLogin(Login);
             if (optionalPerson.isPresent()) {
                 Person person = optionalPerson.get();
                 WyslijMail(person.getMail());
-                bZapisz1.setVisible(true);
                 bZapisz.setVisible(false);
+                bZapisz1.setVisible(true);
             }
         });
         bZapisz1.addActionListener(e ->
@@ -209,4 +210,6 @@ public class ResetujGUI extends JFrame {
 
         javaMailSender.send(message);
     }
+
+
 }

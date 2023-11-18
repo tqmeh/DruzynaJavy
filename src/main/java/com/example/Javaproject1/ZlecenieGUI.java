@@ -4,6 +4,7 @@ import com.toedter.calendar.JDateChooser;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -523,6 +524,7 @@ int Numer1;
         int wiersz=model.getRowCount();
 
         List<Podsumowanie> podsumowanieList=new ArrayList<>();
+
         for(int i=0;i<wiersz;i++)
         {
 
@@ -544,17 +546,20 @@ int Numer1;
             podsumowanieList.add(podsumowanie);
 
 
-
         }
+
+
+
         for(int i=0;i<podsumowanieList.size();i++)
         {
             Podsumowanie podsumowanie = podsumowanieList.get(i);
             System.out.println("Wysiwetlam liste");
             System.out.println("Data: " + podsumowanie.getDataa() + ", Wykonanie: " + podsumowanie.getWykonane() + ", Kwota: " + podsumowanie.getKwota());
         }
-        podsumowanieRepository.saveAll(podsumowanieList);
-    }
 
+        podsumowanieRepository.saveAll(podsumowanieList);
+
+    }
     public void UzupelnijDaneEdycji(Zlecenie zlecenie)
     {
        tZleceniadawca.setText(encryptionService.decrypt(zlecenie.getZleceniodawca()));
@@ -568,15 +573,27 @@ int Numer1;
 
         SimpleDateFormat formaDaty = new SimpleDateFormat("yyyy-MM-dd");
         String dataPrzyejcia = zlecenie.getPrzyjecie();
-        // Sprawdzenie, czy dataPrzyejcia nie jest null
+        String dataZakonczenia=zlecenie.getZakonczenie();
+
         if (dataPrzyejcia != null && !dataPrzyejcia.isEmpty()) {
             try {
                 Date dataPrzyjecia1 = formaDaty.parse(dataPrzyejcia);
                 WybierzDate.setDate(dataPrzyjecia1);
             } catch (ParseException e) {
-                e.printStackTrace(); // Dodaj obsługę błędu, np. zaloguj go lub pokaż komunikat użytkownikowi
+                e.printStackTrace(); //
             }
         }
+        if(dataZakonczenia!=null&&!dataZakonczenia.isEmpty())
+        {
+            try {
+                Date dataZakonczenia1 = formaDaty.parse(dataZakonczenia);
+                WybierzDateZakonczenia.setDate(dataZakonczenia1);
+            } catch (ParseException e) {
+                e.printStackTrace(); //
+            }
+        }
+
+
     }
 
     public void setNumer1(int numer1) {
@@ -585,7 +602,7 @@ int Numer1;
 
 
     public void PobierzDanezTabeli() {
-        List<Podsumowanie> dane = podsumowanieRepository.findAllByNumer(Numer1);
+        List<Podsumowanie> dane = podsumowanieRepository.findAllByNumer(glowna.getNumer());
 
         DefaultTableModel tabelaModel = (DefaultTableModel) table.getModel();
 
@@ -605,5 +622,6 @@ int Numer1;
                 JOptionPane.ERROR_MESSAGE
         );
     }
+
 
 }

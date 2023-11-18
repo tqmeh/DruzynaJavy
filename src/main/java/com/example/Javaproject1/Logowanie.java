@@ -67,6 +67,7 @@ public class Logowanie extends JFrame {
         StworzPrzycisk(bRejestruj, "Rejestruj", 150, 100, 100, 20);
         bRejestruj.addActionListener(e -> {
             if (rejestruj != null) {
+                rejestruj.Czysc();
                 rejestruj.setVisible(true);
             }
         });
@@ -99,7 +100,7 @@ public class Logowanie extends JFrame {
 
 
                 } else {
-
+                    System.out.println("Haslo to "+Haslo);
                     WyswietlKomunikatoBledzie("Błędne hasło");
 
                 }
