@@ -9,6 +9,8 @@ import org.springframework.stereotype.Component;
 import javax.swing.*;
 import java.security.SecureRandom;
 import java.util.Optional;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 
 @Component
@@ -21,8 +23,10 @@ public class Logowanie extends JFrame {
     static  String charakter = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()";
     private static final int dlugoscKodu = 10;
     String kodprzykladowy = GenerujKod(), kodUwierzytelniajacy;
-    JLabel lLogin, lHaslo, lKodPotwierdzajacy;
-    JButton bWyslij, bRejestruj, bZaloguj, bResetuj;
+    JLabel lLogin, lHaslo, lKodPotwierdzajacy, lJezyki;
+    JButton bWyslij, bRejestruj, bZaloguj, bResetuj, bPolski, bAngielski;
+    JComboBox cJezyki;
+    String[] jezyki={"Polski","Angielski"};;
     Glowna glowna;
     public String Haslo, Login;
     ZlecenieGUI zlecenieGUI;
@@ -37,7 +41,7 @@ public class Logowanie extends JFrame {
         this.javaMailSender = javaMailSender;
         this.glowna = glowna;
         this.zlecenieGUI = zlecenieGUI;
-        setSize(400, 200);
+        setSize(400, 300);
         setLocationRelativeTo(null);
         setLayout(null);
 
@@ -51,6 +55,10 @@ public class Logowanie extends JFrame {
         tKodPotwierdzajacy = new JTextField();
         pHaslo = new JPasswordField();
         bResetuj = new JButton();
+
+        lJezyki=new JLabel(JavaProjektApplication.resourceBundle.getString("jezyk")+":");
+        lJezyki.setBounds(120,20,100,20);
+        add(lJezyki);
 
         StowrzNapis(lLogin, "Login", 50, 10, 100, 20);
         StowrzNapis(lHaslo, "Haslo", 50, 40, 100, 20);
