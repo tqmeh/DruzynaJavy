@@ -51,12 +51,22 @@
 			<artifactId>spring-security-crypto</artifactId>
 			<version>6.1.2</version> <!-- Użyj odpowiedniej wersji -->
 		</dependency>
-	</dependencies>
+		<dependency>
+			<groupId>com.formdev</groupId>
+			<artifactId>flatlaf-intellij-themes</artifactId>
+			<version>3.2.5</version>
+		</dependency>
+        <dependency>
+            <groupId>com.formdev</groupId>
+            <artifactId>flatlaf</artifactId>
+            <version>3.0</version>
+        </dependency>
+    </dependencies>
 
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>org.springframe work.boot</groupId>
+				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 		</plugins>

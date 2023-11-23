@@ -25,6 +25,7 @@ public class Logowanie extends JFrame {
     String kodprzykladowy = GenerujKod(), kodUwierzytelniajacy;
     JLabel lLogin, lHaslo, lKodPotwierdzajacy, lJezyki;
     JButton bWyslij, bRejestruj, bZaloguj, bResetuj, bPolski, bAngielski;
+
     JComboBox cJezyki;
     String[] jezyki={"Polski","Angielski"};;
     Glowna glowna;
@@ -55,35 +56,45 @@ public class Logowanie extends JFrame {
         tKodPotwierdzajacy = new JTextField();
         pHaslo = new JPasswordField();
         bResetuj = new JButton();
+        bPolski = new JButton();
+        bAngielski = new JButton();
 
         lJezyki=new JLabel(JavaProjektApplication.resourceBundle.getString("jezyk")+":");
-        lJezyki.setBounds(120,20,100,20);
+        lJezyki.setBounds(100,20,50,20);
         add(lJezyki);
+        StworzPrzycisk(bPolski,"polski",150,20,100,20);
+        bPolski.setVisible(true);
+        StworzPrzycisk(bAngielski, "angielski",260,20,100,20);
+        bAngielski.setVisible(true);
 
-        StowrzNapis(lLogin, "Login", 50, 10, 100, 20);
-        StowrzNapis(lHaslo, "Haslo", 50, 40, 100, 20);
+        StowrzNapis(lLogin, "login", 50, 60, 100, 20);
+        StowrzNapis(lHaslo, "haslo", 50, 90, 100, 20);
 
-        StworzWpis(tLogin, 150, 10, 100, 20);
+        StworzWpis(tLogin, 150, 60, 100, 20);
 
-        StworzHaslo(pHaslo, 150, 40, 100, 20);
+        StworzHaslo(pHaslo, 150, 90, 100, 20);
 
-        StworzPrzycisk(bWyslij, "Wyślij", 50, 100, 100, 20);
+        StworzPrzycisk(bWyslij, "wyslij", 50, 150, 100, 20);
         bWyslij.setVisible(true);
-        StworzPrzycisk(bZaloguj, "Zaloguj", 50, 100, 100, 20);
+        StworzPrzycisk(bZaloguj, "zaloguj", 50, 150, 100, 20);
         bZaloguj.setVisible(false);
 
-        StworzPrzycisk(bRejestruj, "Rejestruj", 150, 100, 100, 20);
+        StworzPrzycisk(bRejestruj, "rejestruj", 150, 150, 100, 20);
         bRejestruj.addActionListener(e -> {
             if (rejestruj != null) {
                 rejestruj.Czysc();
                 rejestruj.setVisible(true);
             }
         });
-        StworzPrzycisk(bResetuj, "Resetuj", 250, 100, 100, 20);
+        StworzPrzycisk(bResetuj, "rejestruj", 250, 150, 100, 20);
         bResetuj.addActionListener(e -> {
             ResetujGUI resetujGUI = new ResetujGUI(personRepository, javaMailSender,passwordEncoder);
             resetujGUI.setVisible(true);
         });
+
+        StowrzNapis(DarkModeHandler.lDarkMode,"jasny", 50,200,75,20);
+        DarkModeHandler.bDarkMode.setLocation(100,200);
+        DarkModeHandler.bDarkMode.setVisible(true);
 
 
         bWyslij.addActionListener(e -> {
@@ -123,6 +134,31 @@ public class Logowanie extends JFrame {
                 SprawdzKod(kodprzykladowy, tKodPotwierdzajacy)
 
         );
+
+        bPolski.addActionListener (e -> {
+                ResourceBundle.clearCache();
+            Locale.setDefault(JavaProjektApplication.locale_pl_PL);
+            JavaProjektApplication.resourceBundle = ResourceBundle.getBundle("bundle", JavaProjektApplication.locale_pl_PL);
+            invalidate();
+            validate();
+            repaint();
+            setVisible(true);
+            System.out.println("Polski");
+            System.out.println("Resource bundle po naciśnięciu Polski: "+JavaProjektApplication.resourceBundle.getLocale());
+        });
+
+        bAngielski.addActionListener (e -> {
+            ResourceBundle.clearCache();
+            Locale.setDefault(JavaProjektApplication.locale_pl_PL);
+            JavaProjektApplication.resourceBundle = ResourceBundle.getBundle("bundle", JavaProjektApplication.locale_en_UK);
+            invalidate();
+            validate();
+            repaint();
+            setVisible(true);
+            System.out.println("Angielski");
+            System.out.println("Resource bundle po naciśnięciu Angielski: "+JavaProjektApplication.resourceBundle.getLocale());
+        });
+
     }
 
 
@@ -130,6 +166,7 @@ public class Logowanie extends JFrame {
 
     public void StowrzNapis(JLabel label,String napis,int a, int b, int c, int d)
     {
+        napis=JavaProjektApplication.resourceBundle.getString(napis);
         label.setText(napis);
         label.setBounds(a,b,c,d);
         add(label);
@@ -138,6 +175,7 @@ public class Logowanie extends JFrame {
 
     public void StworzPrzycisk(JButton button,String napis,int a,int b,int c, int d)
     {
+        napis=JavaProjektApplication.resourceBundle.getString(napis);
         button.setText(napis);
         button.setBounds(a,b,c,d);
         add(button);
