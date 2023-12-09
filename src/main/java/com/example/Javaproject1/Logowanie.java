@@ -8,9 +8,8 @@ import org.springframework.stereotype.Component;
 
 import javax.swing.*;
 import java.security.SecureRandom;
-import java.util.Optional;
-import java.util.Locale;
-import java.util.ResourceBundle;
+import java.sql.Array;
+import java.util.*;
 
 
 @Component
@@ -23,15 +22,14 @@ public class Logowanie extends JFrame {
     static  String charakter = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()";
     private static final int dlugoscKodu = 10;
     String kodprzykladowy = GenerujKod(), kodUwierzytelniajacy;
-    JLabel lLogin, lHaslo, lKodPotwierdzajacy, lJezyki;
-    JButton bWyslij, bRejestruj, bZaloguj, bResetuj, bPolski, bAngielski;
+    JLabel lLogin, lHaslo, lKodPotwierdzajacy, lJezyki, lLightDarkMode;
+    JButton bWyslij, bRejestruj, bZaloguj, bResetuj, bPolski, bAngielski, bDarkMode, bLightMode;
 
-    JComboBox cJezyki;
-    String[] jezyki={"Polski","Angielski"};;
     Glowna glowna;
     public String Haslo, Login;
     ZlecenieGUI zlecenieGUI;
     PasswordEncoder passwordEncoder;
+
 
     @Autowired
     public Logowanie(Rejestruj rejestruj, PersonRepository personRepository, JavaMailSender javaMailSender, Glowna glowna, ZlecenieGUI zlecenieGUI, PasswordEncoder passwordEncoder) {
@@ -46,6 +44,7 @@ public class Logowanie extends JFrame {
         setLocationRelativeTo(null);
         setLayout(null);
 
+
         lKodPotwierdzajacy = new JLabel();
         lLogin = new JLabel();
         lHaslo = new JLabel();
@@ -58,21 +57,25 @@ public class Logowanie extends JFrame {
         bResetuj = new JButton();
         bPolski = new JButton();
         bAngielski = new JButton();
+        lLightDarkMode = new JLabel();
+        bDarkMode = new JButton();
+        bLightMode = new JButton();
 
-        lJezyki=new JLabel(JavaProjektApplication.resourceBundle.getString("jezyk")+":");
-        lJezyki.setBounds(100,20,50,20);
+
+        lJezyki=new JLabel(KontrolerJezyka.resourceBundle.getString("jezyk")+":");
+        lJezyki.setBounds(50,20,100,20);
         add(lJezyki);
         StworzPrzycisk(bPolski,"polski",150,20,100,20);
         bPolski.setVisible(true);
         StworzPrzycisk(bAngielski, "angielski",260,20,100,20);
         bAngielski.setVisible(true);
 
-        StowrzNapis(lLogin, "login", 50, 60, 100, 20);
-        StowrzNapis(lHaslo, "haslo", 50, 90, 100, 20);
+        StowrzNapis(lLogin, "login", 50, 70, 100, 20);
+        StowrzNapis(lHaslo, "haslo", 50, 100, 100, 20);
 
-        StworzWpis(tLogin, 150, 60, 100, 20);
+        StworzWpis(tLogin, 150, 70, 100, 20);
 
-        StworzHaslo(pHaslo, 150, 90, 100, 20);
+        StworzHaslo(pHaslo, 150, 100, 100, 20);
 
         StworzPrzycisk(bWyslij, "wyslij", 50, 150, 100, 20);
         bWyslij.setVisible(true);
@@ -92,10 +95,11 @@ public class Logowanie extends JFrame {
             resetujGUI.setVisible(true);
         });
 
-        StowrzNapis(DarkModeHandler.lDarkMode,"jasny", 50,200,75,20);
-        DarkModeHandler.bDarkMode.setLocation(100,200);
-        DarkModeHandler.bDarkMode.setVisible(true);
-
+        StowrzNapis(lLightDarkMode, "tryb", 20, 200, 130,20);
+        StworzPrzycisk(bLightMode, "lightButton", 150,200,100,20);
+        bLightMode.setVisible(true);
+        StworzPrzycisk(bDarkMode, "darkButton", 250,200,100,20);
+        bDarkMode.setVisible(true);
 
         bWyslij.addActionListener(e -> {
             Pobierz();
@@ -125,7 +129,7 @@ public class Logowanie extends JFrame {
                 }
             } else {
 
-                WyswietlKomunikatoBledzie("Brak użytkownika o podanym loginie");
+                WyswietlKomunikatoBledzie("brakLoginu");
 
             }
         });
@@ -135,38 +139,80 @@ public class Logowanie extends JFrame {
 
         );
 
+
+        ArrayList<JLabel> allLabels = new ArrayList<JLabel>();
+        allLabels.add(lLogin);
+        allLabels.add(lHaslo);
+        allLabels.add(lKodPotwierdzajacy);
+        allLabels.add(lJezyki);
+        allLabels.add(lLightDarkMode);
+
+        ArrayList<JButton> allButtons = new ArrayList<>();
+        allButtons.add(bWyslij);
+        allButtons.add(bRejestruj);
+        allButtons.add(bZaloguj);
+        allButtons.add(bResetuj);
+        allButtons.add(bPolski);
+        allButtons.add(bAngielski);
+        allButtons.add(bDarkMode);
+        allButtons.add(bLightMode);
+
         bPolski.addActionListener (e -> {
-                ResourceBundle.clearCache();
-            Locale.setDefault(JavaProjektApplication.locale_pl_PL);
-            JavaProjektApplication.resourceBundle = ResourceBundle.getBundle("bundle", JavaProjektApplication.locale_pl_PL);
-            invalidate();
-            validate();
-            repaint();
+            //ResourceBundle.clearCache();
+            //Locale.setDefault(KontrolerJezyka.locale_pl_PL);
+            //KontrolerJezyka.resourceBundle = ResourceBundle.getBundle("bundle", KontrolerJezyka.locale_pl_PL);
+            KontrolerJezyka.ZmianaJezykaNaPolski();
+            super.revalidate();
             setVisible(true);
             System.out.println("Polski");
-            System.out.println("Resource bundle po naciśnięciu Polski: "+JavaProjektApplication.resourceBundle.getLocale());
+            System.out.println("Resource bundle po naciśnięciu Polski: "+KontrolerJezyka.resourceBundle.getLocale());
+            for(JLabel label : allLabels){
+                label.revalidate();
+                label.repaint();
+            }
+            for(JButton button : allButtons){
+                button.revalidate();
+                button.repaint();
+            }
         });
 
         bAngielski.addActionListener (e -> {
-            ResourceBundle.clearCache();
-            Locale.setDefault(JavaProjektApplication.locale_pl_PL);
-            JavaProjektApplication.resourceBundle = ResourceBundle.getBundle("bundle", JavaProjektApplication.locale_en_UK);
-            invalidate();
-            validate();
-            repaint();
+            //ResourceBundle.clearCache();
+            //Locale.setDefault(KontrolerJezyka.locale_pl_PL);
+            //KontrolerJezyka.resourceBundle = ResourceBundle.getBundle("bundle", KontrolerJezyka.locale_en_UK);
+            KontrolerJezyka.ZmianaJezykaNaAngielski();
+            super.invalidate();
+            super.revalidate();
             setVisible(true);
             System.out.println("Angielski");
-            System.out.println("Resource bundle po naciśnięciu Angielski: "+JavaProjektApplication.resourceBundle.getLocale());
+            System.out.println("Resource bundle po naciśnięciu Angielski: "+KontrolerJezyka.resourceBundle.getLocale());
+            for(JLabel label : allLabels){
+                label.repaint();
+            }
+            for(JButton button : allButtons){
+                button.revalidate();
+                button.repaint();
+            }
         });
 
-    }
+        bLightMode.addActionListener(e -> {
+            DarkModeHandler.ZmianaTrybuNaJasny();
+            super.revalidate();
+            super.repaint();
+        });
 
+        bDarkMode.addActionListener(e -> {
+            DarkModeHandler.ZmianaTrybuNaCiemny();
+            super.revalidate();
+            super.repaint();
+        });
+    }
 
 
 
     public void StowrzNapis(JLabel label,String napis,int a, int b, int c, int d)
     {
-        napis=JavaProjektApplication.resourceBundle.getString(napis);
+        napis=KontrolerJezyka.resourceBundle.getString(napis);
         label.setText(napis);
         label.setBounds(a,b,c,d);
         add(label);
@@ -175,7 +221,7 @@ public class Logowanie extends JFrame {
 
     public void StworzPrzycisk(JButton button,String napis,int a,int b,int c, int d)
     {
-        napis=JavaProjektApplication.resourceBundle.getString(napis);
+        napis=KontrolerJezyka.resourceBundle.getString(napis);
         button.setText(napis);
         button.setBounds(a,b,c,d);
         add(button);
@@ -201,11 +247,11 @@ public class Logowanie extends JFrame {
         System.out.println(Haslo);
         System.out.println(Login);
     }
-    public void WyswietlKomunikatoBledzie(String Blad)
+    public static void WyswietlKomunikatoBledzie(String Blad)
     {
         JOptionPane.showMessageDialog(
                 null,
-                Blad,
+                KontrolerJezyka.resourceBundle.getString(Blad),
                 "Błąd",
                 JOptionPane.ERROR_MESSAGE
         );
@@ -216,8 +262,8 @@ public class Logowanie extends JFrame {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom("druzynajavy@gmail.com");
         message.setTo(mail);
-        message.setSubject("Kod uwierzytelniający zalogowanie");
-        message.setText("Witaj, jesteś już prawie zalogowany, aby dokończyć logowanie wpisz w programie ten kod   "+kodprzykladowy+""); // Treść wiadomości
+        message.setSubject(KontrolerJezyka.resourceBundle.getString("kodAutoryzacji"));
+        message.setText(KontrolerJezyka.resourceBundle.getString("tekstMaila")+kodprzykladowy+""); // Treść wiadomości
 
         javaMailSender.send(message);
     }
@@ -239,7 +285,7 @@ public class Logowanie extends JFrame {
         kodUwierzytelniajacy=jTextField.getText();
         if(napis.equals(kodUwierzytelniajacy))
         {
-            System.out.println("Kod Poprawny");
+            System.out.println(KontrolerJezyka.resourceBundle.getString("poprawnyKod"));
             if (glowna != null) {
                 glowna.setVisible(true);
                 dispose();
@@ -247,7 +293,7 @@ public class Logowanie extends JFrame {
         }
         else
         {
-            WyswietlKomunikatoBledzie("Wpisany kod uwierzytelniający jest niepoprawny");
+            WyswietlKomunikatoBledzie(KontrolerJezyka.resourceBundle.getString("blednyKod"));
         }
     }
 
