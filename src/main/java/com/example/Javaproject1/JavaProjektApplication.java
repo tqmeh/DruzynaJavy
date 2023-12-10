@@ -1,9 +1,13 @@
 package com.example.Javaproject1;
 
+import com.formdev.flatlaf.FlatDarkLaf;
+import com.formdev.flatlaf.FlatLightLaf;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Import;
+
+import javax.swing.*;
 
 
 @SpringBootApplication
@@ -11,6 +15,13 @@ import org.springframework.context.annotation.Import;
     public class JavaProjektApplication {
 
         public static void main(String[] args) {
+
+            try {
+                UIManager.setLookAndFeel(new FlatLightLaf());
+            } catch (UnsupportedLookAndFeelException ex) {
+                throw new RuntimeException(ex);
+            }
+
             System.setProperty("java.awt.headless", "false");
 
 

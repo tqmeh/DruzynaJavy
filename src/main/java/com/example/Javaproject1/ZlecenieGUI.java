@@ -63,7 +63,7 @@ int Numer1;
         setExtendedState(MAXIMIZED_BOTH);
         setLayout(new BorderLayout());
         zakladka1=new JTabbedPane();
-
+        revalidate();
 
         panel1=StworzPanel1();
         panel2=StworzPanel2();
@@ -71,9 +71,9 @@ int Numer1;
         panel4=StworzPanel4();
         panel5=StworzPanel5();
 
-        zakladka1.addTab("Przyjecie urządzenia",null,panel3);
-        zakladka1.addTab("Widoczne wady urządzenia",null,panel4);
-        zakladka1.addTab("Podsumowanie",null,panel5);
+        zakladka1.addTab(KontrolerJezyka.resourceBundle.getString("przyjecieUrzadzenia"),null,panel3);
+        zakladka1.addTab(KontrolerJezyka.resourceBundle.getString("widzoczneWadyUrzadzenia"),null,panel4);
+        zakladka1.addTab(KontrolerJezyka.resourceBundle.getString("podsumowanie"),null,panel5);
 
         add(zakladka1, BorderLayout.CENTER);
         zakladka1.addChangeListener(e -> {
@@ -105,10 +105,10 @@ int Numer1;
         bWyjdz=new JButton();
         bZapisz=new JButton();
 
-        StworzPrzycisk(bEdytuj,"Dodaj",100,20,panel);
-        StworzPrzycisk(bZapisz,"Zapisz",100,20,panel);
-        StworzPrzycisk(bCzysc,"Czyść",100,20,panel);
-        StworzPrzycisk(bWyjdz,"Wyjdź",100,20,panel);
+        StworzPrzycisk(bEdytuj,"dodaj",100,20,panel);
+        StworzPrzycisk(bZapisz,"zapisz",100,20,panel);
+        StworzPrzycisk(bCzysc,"czysc",100,20,panel);
+        StworzPrzycisk(bWyjdz,"wyjdz",100,20,panel);
 
 
         Czysc(bCzysc);
@@ -162,14 +162,14 @@ int Numer1;
         bWybierzZleceniodawce=new JButton();
 
 
-        WysweitlNapis(lZleceniodawca,"Zleceniodawca",50,50,100,20,panel);
-        WysweitlNapis(lUrzadzenie,"Urzadzenie",50,80,100,20,panel);
-        WysweitlNapis(lMarka,"Marka",50,110,100,20,panel);
-        WysweitlNapis(lModel,"Model",50,140,100,20,panel);
-        WysweitlNapis(lNumerSeryjny,"Numer Serujny",50,170,100,20,panel);
-        WysweitlNapis(lDataPrzyjecia,"Data Przyjecia",50,200,100,20,panel);
-        WysweitlNapis(lOpisUsterki,"Opis usterki",50,250,100,20,panel);
-        WysweitlNapis(lDataZakonczenia,"Data zakończenia",400,200,100,20,panel);
+        WysweitlNapis(lZleceniodawca,"zleceniodawca",50,50,100,20,panel);
+        WysweitlNapis(lUrzadzenie,"urzadzenie",50,80,100,20,panel);
+        WysweitlNapis(lMarka,"marka",50,110,100,20,panel);
+        WysweitlNapis(lModel,"model",50,140,100,20,panel);
+        WysweitlNapis(lNumerSeryjny,"seryjny",50,170,100,20,panel);
+        WysweitlNapis(lDataPrzyjecia,"dataPrzyjecia",50,200,100,20,panel);
+        WysweitlNapis(lOpisUsterki,"opisUsterki",50,250,100,20,panel);
+        WysweitlNapis(lDataZakonczenia,"dataZakonczenia",400,200,100,20,panel);
 
         WpiszTekst(tZleceniadawca,150,50,150,20,panel);
         WpiszTekst(tUrzadzenie,150,80,150,20,panel);
@@ -177,7 +177,7 @@ int Numer1;
         WpiszTekst(tModel,150,140,150,20,panel);
         WpiszTekst(tNumerSeryjny,150,170,150,20,panel);
 
-        StworzPrzyckiskzDanymi(bWybierzZleceniodawce,"Wybierz zleceniodawce",310,50,150,20,panel);
+        StworzPrzyckiskzDanymi(bWybierzZleceniodawce,"wybierzZleceniodawce",310,50,150,20,panel);
         bWybierzZleceniodawce.addActionListener(e -> {
             if(wybierzZleceniodawceGUI !=null)
             {
@@ -214,8 +214,8 @@ int Numer1;
 
 
 
-        WysweitlNapis(lWady,"Zauważone wady urządzenia",0,0,200,20,panel);
-        WysweitlNapis(lUwagiSerwisanta,"UWagi serwisanta",800,0,200,20,panel);
+        WysweitlNapis(lWady,"zauwazoneWadyUrzadzenia",0,0,200,20,panel);
+        WysweitlNapis(lUwagiSerwisanta,"uwagiSerwisanta",800,0,200,20,panel);
 
         aWady=new LimitowanyTextArea(200);
         aWady.setWrapStyleWord(true);
@@ -246,7 +246,11 @@ int Numer1;
         panel.setBackground(Color.GREEN);
 
         // Domyślny model danych
-        String[] NazwaKolumn = {"Data", "Element", "Kwota"};
+        String[] NazwaKolumn = {
+                KontrolerJezyka.resourceBundle.getString("data"),
+                KontrolerJezyka.resourceBundle.getString("element"),
+                KontrolerJezyka.resourceBundle.getString("kwota")
+        };
         DefaultTableModel tabelaModel = new DefaultTableModel(NazwaKolumn, 0);
         table = new JTable(tabelaModel);
         PobierzDanezTabeli();
@@ -260,18 +264,21 @@ int Numer1;
 
     public void StworzPrzycisk(JButton button,String nazwa,int a,int b,JPanel panel)
     {
+        nazwa=KontrolerJezyka.resourceBundle.getString(nazwa);
         button.setPreferredSize(new Dimension(a,b));
         button.setText(nazwa);
         panel.add(button);
     }
     public void StworzPrzyckiskzDanymi(JButton button,String nazwa,int a,int b, int c,int d, JPanel panel)
     {
+        nazwa=KontrolerJezyka.resourceBundle.getString(nazwa);
         button.setText(nazwa);
         button.setBounds(a,b,c,d);
         panel.add(button);
     }
     public void WysweitlNapis(JLabel label,String napis,int a, int b,int c, int d, JPanel panel)
     {
+        napis=KontrolerJezyka.resourceBundle.getString(napis);
         label.setText(napis);
         label.setBounds(a,b,c,d);
         panel.add(label);
@@ -357,31 +364,31 @@ int Numer1;
 
         if(ZLeceniodawca1.isEmpty())
         {
-            WyswietlKomunikatoBledzie("Nie wybrales zleceniodawcy");
+            WyswietlKomunikatoBledzie("nieWybranoZleceniowadcy");
         }
         else if (Urzadzenie1.isEmpty())
         {
-        WyswietlKomunikatoBledzie("Nie wpisales co to za urzadzenie");
+        WyswietlKomunikatoBledzie("nieWpisanoUrzadzenia");
         }
         else if (Marka1.isEmpty())
         {
-            WyswietlKomunikatoBledzie("Nie wpisales marki");
+            WyswietlKomunikatoBledzie("nieWpisanoMarki");
         }
         else if (Model1.isEmpty())
         {
-            WyswietlKomunikatoBledzie("Nie wpisales modelu urządzenia");
+            WyswietlKomunikatoBledzie("nieWpisanoModelu");
         }
         else if (NumerSeryjny1.isEmpty())
         {
-         WyswietlKomunikatoBledzie("Nie wpisałeś numeru seryjnego");
+         WyswietlKomunikatoBledzie("nieWpisanoSeryjnego");
         }
         else if (wybranydzien==null)
         {
-            WyswietlKomunikatoBledzie("Nie wybrałeś daty, kiedy przyjęto zlecenie do realizacji");
+            WyswietlKomunikatoBledzie("nieWybranoDaty");
         }
         else if (OpisUsterki1.isEmpty())
         {
-            WyswietlKomunikatoBledzie("Nie wpisałeś usterki odnośnie urządzenia");
+            WyswietlKomunikatoBledzie("nieWpisanoUsterki");
         }
         else if (!Zleceniodawca.isEmpty()||!Urzadzenie.isEmpty()||!Marka.isEmpty()||!Model.isEmpty()||!NumerSeryjny.isEmpty()||!DataPrzyjeciaZlecenia.isEmpty()||!OpisUsterki.isEmpty())
         {
@@ -465,24 +472,24 @@ int Numer1;
         tKwota=new JTextField();
         tElement=new JTextField();
 
-        lData.setText("Data");
+        lData.setText(KontrolerJezyka.resourceBundle.getString("data"));
         lData.setBounds(10,10,100,20);
 
-        lElement.setText("Wykonana czynność");
+        lElement.setText(KontrolerJezyka.resourceBundle.getString("wykonanaCzynnosc"));
         lElement.setBounds(10,40,150,20);
 
-        lKwota.setText("Kwota");
+        lKwota.setText(KontrolerJezyka.resourceBundle.getString("kwota"));
         lKwota.setBounds(10,70,100,20);
 
         tElement.setBounds(130,40,100,20);
         tKwota.setBounds(130,70,100,20);
 
         bWyjdz=new JButton();
-        bWyjdz.setText("Wyjdz");
+        bWyjdz.setText(KontrolerJezyka.resourceBundle.getString("wyjdz"));
         bWyjdz.setBounds(140,110,100,20);
 
         bZapisz=new JButton();
-        bZapisz.setText("Zapisz");
+        bZapisz.setText(KontrolerJezyka.resourceBundle.getString("zapisz"));
         bZapisz.setBounds(30,110,100,20);
         DodajElement.setBounds(130,10,100,20);
 
@@ -617,7 +624,7 @@ int Numer1;
     {
         JOptionPane.showMessageDialog(
                 null,
-                Blad,
+                KontrolerJezyka.resourceBundle.getString(Blad),
                 "Błąd",
                 JOptionPane.ERROR_MESSAGE
         );
