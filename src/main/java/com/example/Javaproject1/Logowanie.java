@@ -61,7 +61,6 @@ public class Logowanie extends JFrame {
         bDarkMode = new JButton();
         bLightMode = new JButton();
 
-
         lJezyki=new JLabel(KontrolerJezyka.resourceBundle.getString("jezyk")+":");
         lJezyki.setBounds(50,20,100,20);
         add(lJezyki);
@@ -118,7 +117,7 @@ public class Logowanie extends JFrame {
                     lKodPotwierdzajacy.setVisible(true);
                     tKodPotwierdzajacy.setVisible(true);
                     bZaloguj.setVisible(true);
-                    StowrzNapis(lKodPotwierdzajacy, "Kod", 50, 70, 100, 20);
+                    StowrzNapis(lKodPotwierdzajacy, "kod", 50, 70, 100, 20);
                     StworzWpis(tKodPotwierdzajacy, 150, 70, 100, 20);
 
 
@@ -157,12 +156,14 @@ public class Logowanie extends JFrame {
         allButtons.add(bDarkMode);
         allButtons.add(bLightMode);
 
+
+
         bPolski.addActionListener (e -> {
             //ResourceBundle.clearCache();
             //Locale.setDefault(KontrolerJezyka.locale_pl_PL);
             //KontrolerJezyka.resourceBundle = ResourceBundle.getBundle("bundle", KontrolerJezyka.locale_pl_PL);
             KontrolerJezyka.ZmianaJezykaNaPolski();
-            super.revalidate();
+            revalidate();
             setVisible(true);
             System.out.println("Polski");
             System.out.println("Resource bundle po naciśnięciu Polski: "+KontrolerJezyka.resourceBundle.getLocale());
@@ -174,6 +175,7 @@ public class Logowanie extends JFrame {
                 button.revalidate();
                 button.repaint();
             }
+
         });
 
         bAngielski.addActionListener (e -> {
@@ -181,30 +183,34 @@ public class Logowanie extends JFrame {
             //Locale.setDefault(KontrolerJezyka.locale_pl_PL);
             //KontrolerJezyka.resourceBundle = ResourceBundle.getBundle("bundle", KontrolerJezyka.locale_en_UK);
             KontrolerJezyka.ZmianaJezykaNaAngielski();
-            super.invalidate();
-            super.revalidate();
+            invalidate();
+            revalidate();
             setVisible(true);
             System.out.println("Angielski");
             System.out.println("Resource bundle po naciśnięciu Angielski: "+KontrolerJezyka.resourceBundle.getLocale());
             for(JLabel label : allLabels){
+                label.revalidate();
                 label.repaint();
             }
             for(JButton button : allButtons){
                 button.revalidate();
                 button.repaint();
             }
+
         });
 
         bLightMode.addActionListener(e -> {
             DarkModeHandler.ZmianaTrybuNaJasny();
-            super.revalidate();
-            super.repaint();
+            SwingUtilities.updateComponentTreeUI(this);
+            revalidate();
+            repaint();
         });
 
         bDarkMode.addActionListener(e -> {
             DarkModeHandler.ZmianaTrybuNaCiemny();
-            super.revalidate();
-            super.repaint();
+            SwingUtilities.updateComponentTreeUI(this);
+            revalidate();
+            repaint();
         });
     }
 
@@ -293,7 +299,7 @@ public class Logowanie extends JFrame {
         }
         else
         {
-            WyswietlKomunikatoBledzie(KontrolerJezyka.resourceBundle.getString("blednyKod"));
+            WyswietlKomunikatoBledzie("blednyKod");
         }
     }
 

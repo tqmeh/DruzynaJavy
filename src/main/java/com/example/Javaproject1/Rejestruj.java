@@ -30,6 +30,7 @@ public class Rejestruj extends JFrame {
         setSize(400,300);
         setLocationRelativeTo(null);
         setLayout(null);
+        revalidate();
         lLogin=new JLabel();
         lHaslo=new JLabel();
         lPowtorzHaslo=new JLabel();
@@ -43,11 +44,11 @@ public class Rejestruj extends JFrame {
         bRejestruj=new JButton();
         bWyjdz=new JButton();
 
-        StowrzNapis(lLogin,KontrolerJezyka.resourceBundle.getString("login"),20,10,100,20);
-        StowrzNapis(lHaslo,KontrolerJezyka.resourceBundle.getString("haslo"),20,40,100,20);
-        StowrzNapis(lPowtorzHaslo,KontrolerJezyka.resourceBundle.getString("powtorzHaslo"),20,70,100,20);
-        StowrzNapis(lMail,KontrolerJezyka.resourceBundle.getString("mail"),20,100,100,20);
-        StowrzNapis(lPowtorzMail,KontrolerJezyka.resourceBundle.getString("powtorzMail"),20,130,100,20);
+        StowrzNapis(lLogin,"login",20,10,100,20);
+        StowrzNapis(lHaslo,"haslo",20,40,100,20);
+        StowrzNapis(lPowtorzHaslo,"powtorzHaslo",20,70,100,20);
+        StowrzNapis(lMail,"mail",20,100,100,20);
+        StowrzNapis(lPowtorzMail,"powtorzMail",20,130,100,20);
 
 
         StworzWpis(tLogin,120,10,100,20);
@@ -58,8 +59,8 @@ public class Rejestruj extends JFrame {
         StworzHaslo(pHaslo,120,40,100,20);
         StworzHaslo(pPowtorzHaslo,120,70,100,20);
 
-        StworzPrzycisk(bRejestruj,KontrolerJezyka.resourceBundle.getString("rejestruj"), 100,170,100,20);
-        StworzPrzycisk(bWyjdz,KontrolerJezyka.resourceBundle.getString("wyjdz"),200,170,100,20);
+        StworzPrzycisk(bRejestruj,"rejestruj", 100,170,100,20);
+        StworzPrzycisk(bWyjdz,"wyjdz",200,170,100,20);
 
         bWyjdz.addActionListener(e ->
             dispose()
@@ -72,34 +73,34 @@ public class Rejestruj extends JFrame {
             loginhasz=encryptionService.encrypt(login);
             if(login.isEmpty())
             {
-                Logowanie.WyswietlKomunikatoBledzie(KontrolerJezyka.resourceBundle.getString("niewpisanyLogin"));
+                Logowanie.WyswietlKomunikatoBledzie("niewpisanyLogin");
             }
             else if (Haslo.isEmpty())
             {
-                Logowanie.WyswietlKomunikatoBledzie(KontrolerJezyka.resourceBundle.getString("niewpisaneHaslo"));
+                Logowanie.WyswietlKomunikatoBledzie("niewpisaneHaslo");
             }
             else if (PowtorzHaslo.isEmpty())
             {
-                Logowanie.WyswietlKomunikatoBledzie(KontrolerJezyka.resourceBundle.getString("niewpisanePonowneHaslo"));
+                Logowanie.WyswietlKomunikatoBledzie("niewpisanePonowneHaslo");
             }
             else if (Mail.isEmpty())
             {
-                Logowanie.WyswietlKomunikatoBledzie(KontrolerJezyka.resourceBundle.getString("niewpisanyMail"));
+                Logowanie.WyswietlKomunikatoBledzie("niewpisanyMail");
             }
             else if (PowtorzMail.isEmpty())
             {
-                Logowanie.WyswietlKomunikatoBledzie(KontrolerJezyka.resourceBundle.getString("niewpisanyPonownyMail"));
+                Logowanie.WyswietlKomunikatoBledzie("niewpisanyPonownyMail");
             } else if (!Haslo.equals(PowtorzHaslo))
             {
-                Logowanie.WyswietlKomunikatoBledzie(KontrolerJezyka.resourceBundle.getString("rozneHasla"));
+                Logowanie.WyswietlKomunikatoBledzie("rozneHasla");
             }
             else if(!Mail.equals(PowtorzMail))
             {
-                Logowanie.WyswietlKomunikatoBledzie(KontrolerJezyka.resourceBundle.getString("rozneMaile"));
+                Logowanie.WyswietlKomunikatoBledzie("rozneMaile");
             }
             else if(login.equals(SprawdzmyLogin))
             {
-                Logowanie.WyswietlKomunikatoBledzie(KontrolerJezyka.resourceBundle.getString("istniejacyLogin"));
+                Logowanie.WyswietlKomunikatoBledzie("istniejacyLogin");
             }
 
             else
@@ -127,6 +128,7 @@ public void SprawdzLogin()
 }
     public void StowrzNapis(JLabel label,String napis,int a, int b, int c, int d)
     {
+        napis=KontrolerJezyka.resourceBundle.getString(napis);
         label.setText(napis);
         label.setBounds(a,b,c,d);
         add(label);
@@ -134,6 +136,7 @@ public void SprawdzLogin()
     }
     public void StworzPrzycisk(JButton button,String napis,int a,int b,int c, int d)
     {
+        napis=KontrolerJezyka.resourceBundle.getString(napis);
         button.setText(napis);
         button.setBounds(a,b,c,d);
         add(button);

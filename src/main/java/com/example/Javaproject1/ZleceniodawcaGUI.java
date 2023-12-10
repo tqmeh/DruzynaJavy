@@ -37,6 +37,7 @@ int ID;
         this.encryptionService=encryptionService;
         setSize(400,200);
         setExtendedState(MAXIMIZED_BOTH);
+        revalidate();
         panel1=stworzPanel1();
         panel2=stworzPanel2();
         panel3=stworzPanel3();
@@ -53,8 +54,8 @@ int ID;
         bZapisz=new JButton();
         bWyjdz=new JButton();
 
-        StworzPrzycisk(bZapisz,"Zapisz",100,20,panel);
-        StworzPrzycisk(bWyjdz,"Wyjdź",100,20,panel);
+        StworzPrzycisk(bZapisz,"zapisz",100,20,panel);
+        StworzPrzycisk(bWyjdz,"wyjdz",100,20,panel);
 
 
 
@@ -124,15 +125,15 @@ int ID;
         aPelnaNazwaZleceniodawcy=new LimitowanyTextArea(100);
 
 
-        WysweitlNapis(lNazwaSkroconaZleceniodawcy,"Nazwa skrócona zleceniodawcy",20,0,200,20,panel);
-        WysweitlNapis(lZleceniodawca,"Pelna nazwa zleceniodawcy",20,50,200,20,panel);
-        WysweitlNapis(lMiasto,"Miasto",20,240,100,20,panel);
-        WysweitlNapis(lKodPocztowy,"Kod pocztowy",20,290,80,20,panel);
-        WysweitlNapis(lUlica,"Ulica",20,320,80,20,panel);
-        WysweitlNapis(lUkosnik,"/",205,340,5,20,panel);
+        WysweitlNapis(lNazwaSkroconaZleceniodawcy,"skroconaNazwaZleceniodawcy",20,0,200,20,panel);
+        WysweitlNapis(lZleceniodawca,"pelnaNazwaZleceniodawcy",20,50,200,20,panel);
+        WysweitlNapis(lMiasto,"miasto",20,240,100,20,panel);
+        WysweitlNapis(lKodPocztowy,"kodPocztowy",20,290,80,20,panel);
+        WysweitlNapis(lUlica,"ulica",20,320,80,20,panel);
+        WysweitlNapis(lUkosnik,"slash",205,340,5,20,panel);
         WysweitlNapis(lNip,"NIP",400,20,40,20,panel);
-        WysweitlNapis(lTelefonStacjonarny,"Telefon stacjonarny",400,50,150,20,panel);
-        WysweitlNapis(lTelefonKomorkowy,"Telefon komórkowy",400,110,150,20,panel);
+        WysweitlNapis(lTelefonStacjonarny,"telefonStacjonarny",400,50,150,20,panel);
+        WysweitlNapis(lTelefonKomorkowy,"telefonKomorkowy",400,110,150,20,panel);
 
         StworzTextArene(aPelnaNazwaZleceniodawcy,20,80,200,100,panel);
 
@@ -157,6 +158,7 @@ int ID;
     }
     public void WysweitlNapis(JLabel label,String napis,int a, int b,int c, int d, JPanel panel)
     {
+        napis=KontrolerJezyka.resourceBundle.getString(napis);
         label.setText(napis);
         label.setBounds(a,b,c,d);
         panel.add(label);
@@ -232,6 +234,7 @@ int ID;
 
     public void StworzPrzycisk(JButton button,String nazwa,int a,int b,JPanel panel)
     {
+        nazwa=KontrolerJezyka.resourceBundle.getString(nazwa);
         button.setPreferredSize(new Dimension(a,b));
         button.setText(nazwa);
         panel.add(button);
@@ -248,7 +251,7 @@ int ID;
     {
         JOptionPane.showMessageDialog(
                 null,
-                Blad,
+                KontrolerJezyka.resourceBundle.getString(Blad),
                 "Błąd",
                 JOptionPane.ERROR_MESSAGE
         );

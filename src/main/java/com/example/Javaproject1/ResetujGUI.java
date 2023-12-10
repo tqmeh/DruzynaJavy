@@ -28,6 +28,7 @@ public class ResetujGUI extends JFrame {
         this.passwordEncoder=passwordEncoder;
         setSize(400,200);
         setLayout(null);
+        revalidate();
         lLogin=new JLabel();
         lHaslo=new JLabel();
         lPowtorzHaslo=new JLabel();
@@ -39,17 +40,17 @@ public class ResetujGUI extends JFrame {
         lKod=new JLabel();
         tKod=new JTextField();
         bZapisz1=new JButton();
-        StworzNapis(lLogin,"Login",50,10,100,20);
-        StworzNapis(lHaslo,"Haslo",50,40,100,20);
-        StworzNapis(lPowtorzHaslo,"Powtórz hasło",50,70,100,20);
-        StworzNapis(lKod,"Kod",50,100,100,20);
+        StworzNapis(lLogin,"login",50,10,100,20);
+        StworzNapis(lHaslo,"haslo",50,40,100,20);
+        StworzNapis(lPowtorzHaslo,"powtorzHaslo",50,70,100,20);
+        StworzNapis(lKod,"kod",50,100,100,20);
         StworzWpis(tLogin,150,10,100,20);
         StworzWpis(tKod,150,100,100,20);
         StworzHaslo(pHaslo,150,40,100,20);
         StworzHaslo(pPowtorzHaslo,150,70,100,20);
-        StworzPrzycisk(bZapisz,"Zapisz",50,130,100,20);
-        StworzPrzycisk(bWyjdz,"Wyjdz",160,130,100,20);
-        StworzPrzycisk(bZapisz1,"Zapisz",50,130,100,20);
+        StworzPrzycisk(bZapisz,"zapisz",50,130,100,20);
+        StworzPrzycisk(bWyjdz,"wyjdz",160,130,100,20);
+        StworzPrzycisk(bZapisz1,"zapisz",50,130,100,20);
         lKod.setVisible(false);
         tKod.setVisible(false);
         bZapisz1.setVisible(false);
@@ -89,35 +90,35 @@ public class ResetujGUI extends JFrame {
         kodUwierzytelniajacy=tKod.getText().trim();
         if(kodprzykladowy.equals(kodUwierzytelniajacy))
         {
-            WyswietlKomunikatPotwierdzajacy("Hasło zmienione");
+            WyswietlKomunikatPotwierdzajacy("zmienioneHaslo");
             Zmien();
 
         }
         else
         {
-          WyswietlKomunikatoBledzie("Hasla nie sa takie same");
+          WyswietlKomunikatoBledzie("rozneHasla");
         }
     }
     public void Sprawdz()
     {
         if(Login.isEmpty())
         {
-            WyswietlKomunikatoBledzie("Nie wpisalem loginu");
+            WyswietlKomunikatoBledzie("niewpisanyLogin");
         }
         else if (Haslo.isEmpty())
         {
-            WyswietlKomunikatoBledzie("Nie wpisales hasła");
+            WyswietlKomunikatoBledzie("niewpisanyHaslo");
         }
         else if (PowtorzHaslo.isEmpty())
         {
-            WyswietlKomunikatoBledzie("Nie wpisałeś ponownie hasła");
+            WyswietlKomunikatoBledzie("niewpisanePonowneHaslo");
         }
         else if(!Haslo.equals(PowtorzHaslo))
         {
-            WyswietlKomunikatoBledzie("Hasła nie są takie same");
+            WyswietlKomunikatoBledzie("rozneHasla");
         } else if (!Login.equals(SprawdzLogin))
         {
-            WyswietlKomunikatoBledzie("Nie istnieje taki użytkownik");
+            WyswietlKomunikatoBledzie("brakLoginu");
         } else
         {
             lKod.setVisible(true);
@@ -150,7 +151,7 @@ public class ResetujGUI extends JFrame {
     {
         JOptionPane.showMessageDialog(
                 null,
-                Blad,
+                KontrolerJezyka.resourceBundle.getString(Blad),
                 "Błąd",
                 JOptionPane.ERROR_MESSAGE
         );
@@ -166,6 +167,7 @@ public class ResetujGUI extends JFrame {
     }
     public void StworzNapis(JLabel label,String napis,int a, int b, int c, int d)
     {
+        napis=KontrolerJezyka.resourceBundle.getString(napis);
         label.setText(napis);
         label.setBounds(a,b,c,d);
         add(label);
@@ -173,6 +175,7 @@ public class ResetujGUI extends JFrame {
     }
     public void StworzPrzycisk(JButton button,String napis,int a,int b,int c, int d)
     {
+        napis=KontrolerJezyka.resourceBundle.getString(napis);
         button.setText(napis);
         button.setBounds(a,b,c,d);
         add(button);

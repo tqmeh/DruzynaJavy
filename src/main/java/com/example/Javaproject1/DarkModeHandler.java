@@ -8,6 +8,8 @@ import com.formdev.flatlaf.FlatLightLaf;
 //Ktory znajduje sie w \src\main\resources\
 
 public class DarkModeHandler {
+
+
     static void ZmianaTrybuNaCiemny() {
         try {
             UIManager.setLookAndFeel(new FlatDarkLaf());

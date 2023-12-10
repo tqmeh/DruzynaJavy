@@ -34,7 +34,8 @@ public class Glowna extends JFrame {
         this.encryptionService=encryptionService;
 
         setSize (400,200);
-        setTitle("Glowna");
+        revalidate();
+        setTitle(KontrolerJezyka.resourceBundle.getString("tytulGlownej"));
         setExtendedState(MAXIMIZED_BOTH);
 
         panel1=StworzPanel1();
@@ -62,7 +63,7 @@ public class Glowna extends JFrame {
         bOdswiez=new JButton();
         bEdytuj=new JButton();
 
-        StworzPrzycisk(bNowy,"Nowe Zlecenie",100,20,panel);
+        StworzPrzycisk(bNowy,"noweZlecenie",100,20,panel);
         bNowy.addActionListener(e -> {
           Numer=SprawdzNumer();
             NumerZlecenia();
@@ -74,13 +75,13 @@ public class Glowna extends JFrame {
 
 
 
-        StworzPrzycisk(bSprawdz,"Sprawdz",100,20,panel);
+        StworzPrzycisk(bSprawdz,"sprawdz",100,20,panel);
 
 
-        StworzPrzycisk(bOdswiez,"Odświez",100,20,panel);
+        StworzPrzycisk(bOdswiez,"odswiez",100,20,panel);
         bOdswiez.addActionListener(e -> UtworzTabele());
 
-        StworzPrzycisk(bEdytuj,"Edytuj",100,20,panel);
+        StworzPrzycisk(bEdytuj,"edytuj",100,20,panel);
         bEdytuj.addActionListener(e ->
             EdytujiWyczysc()
 
@@ -113,6 +114,7 @@ public class Glowna extends JFrame {
 
     public void StworzPrzycisk(JButton button,String nazwa,int a,int b,JPanel panel)
     {
+        nazwa=KontrolerJezyka.resourceBundle.getString(nazwa);
         button.setPreferredSize(new Dimension(a,b));
         button.setText(nazwa);
         panel.add(button);
@@ -172,7 +174,19 @@ public class Glowna extends JFrame {
             dane[i][9]=encryptionService.decrypt(zlecenie1.getUwagi());
             dane[i][10]=zlecenie1.getZakonczenie();
         }
-        String[] NazwyKolumn={"Numer","Zleceniodawca","Przyjeto","Urzadzenie","Marka","Model","Seryjny","Usterka","Wady","Uwagi","Zakonczono"};
+        String[] NazwyKolumn={
+                KontrolerJezyka.resourceBundle.getString("numer"),
+                KontrolerJezyka.resourceBundle.getString("zleceniodawca"),
+                KontrolerJezyka.resourceBundle.getString("przyjeto"),
+                KontrolerJezyka.resourceBundle.getString("urzadzenie"),
+                KontrolerJezyka.resourceBundle.getString("marka"),
+                KontrolerJezyka.resourceBundle.getString("model"),
+                KontrolerJezyka.resourceBundle.getString("seryjny"),
+                KontrolerJezyka.resourceBundle.getString("usterka"),
+                KontrolerJezyka.resourceBundle.getString("wady"),
+                KontrolerJezyka.resourceBundle.getString("uwagi"),
+                KontrolerJezyka.resourceBundle.getString("zakonczono")
+        };
         DefaultTableModel model=new DefaultTableModel(dane,NazwyKolumn);
         tTabela.setModel(model);
 

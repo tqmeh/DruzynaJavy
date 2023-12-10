@@ -38,6 +38,7 @@ int ID;
         panel1=StworzPanel1();
         panel2=StworzPanel2();
         panel3=StworzPanel3();
+        revalidate();
 
         add(panel3, BorderLayout.CENTER);
 
@@ -55,7 +56,7 @@ int ID;
 
 
         bNowyZleceniodawca=new JButton();
-        StworzPrzycisk(bNowyZleceniodawca,"Nowy",100,20,panel);
+        StworzPrzycisk(bNowyZleceniodawca,"nowy",100,20,panel);
         bNowyZleceniodawca.addActionListener(e -> {
             Wyczysc();
             zleceniodawcaGUI.setID(0);
@@ -64,7 +65,7 @@ int ID;
             }
         });
         bEdytuj=new JButton();
-        StworzPrzycisk(bEdytuj,"Edytuj",100,20,panel);
+        StworzPrzycisk(bEdytuj,"edytuj",100,20,panel);
         bEdytuj.addActionListener(e -> {
 
             Wyczysc();
@@ -73,10 +74,10 @@ int ID;
         });
 
         bOdswiez=new JButton();
-        StworzPrzycisk(bOdswiez,"Odśwież",100,20,panel);
+        StworzPrzycisk(bOdswiez,"odswiez",100,20,panel);
         bOdswiez.addActionListener(e -> WypelnijTabele());
         bWyjdz=new JButton();
-        StworzPrzycisk(bWyjdz,"Wyjdź",100,20,panel);
+        StworzPrzycisk(bWyjdz,"wyjdz",100,20,panel);
         bWyjdz.addActionListener(e ->
             dispose()
         );
@@ -141,7 +142,20 @@ int ID;
 
 
         }
-        String[] NazwyKolumn={"ID","Nazwa skrócona zleceniodowacy","Pełna nazwa zleceniodawcy","Miasto","Kod pocztowy","Ulica","Numer domu","Numer mieszkania","Kraj","NIP","Telefon stacjonarny","Telefon Kom orkowy"};
+        String[] NazwyKolumn={
+                KontrolerJezyka.resourceBundle.getString("ID"),
+                KontrolerJezyka.resourceBundle.getString("skroconaNazwaZleceniodawcy"),
+                KontrolerJezyka.resourceBundle.getString("pelnaNazwaZleceniodawcy"),
+                KontrolerJezyka.resourceBundle.getString("miasto"),
+                KontrolerJezyka.resourceBundle.getString("kodPocztowy"),
+                KontrolerJezyka.resourceBundle.getString("ulica"),
+                KontrolerJezyka.resourceBundle.getString("numerDomu"),
+                KontrolerJezyka.resourceBundle.getString("numerMieszkania"),
+                KontrolerJezyka.resourceBundle.getString("kraj"),
+                KontrolerJezyka.resourceBundle.getString("NIP"),
+                KontrolerJezyka.resourceBundle.getString("telefonStacjonarny"),
+                KontrolerJezyka.resourceBundle.getString("telefonKomorkowy")
+        };
         DefaultTableModel model=new DefaultTableModel(dane,NazwyKolumn);
         tTabela.setModel(model);
 
@@ -149,6 +163,7 @@ int ID;
     }
     public void StworzPrzycisk(JButton button,String nazwa,int a,int b,JPanel panel)
     {
+        nazwa=KontrolerJezyka.resourceBundle.getString(nazwa);
         button.setPreferredSize(new Dimension(a,b));
         button.setText(nazwa);
         panel.add(button);
@@ -209,7 +224,7 @@ int ID;
         zleceniodawcaGUI.tNumerMieszkania.setText("");
         zleceniodawcaGUI.tNip.setText("");
         zleceniodawcaGUI.tKraj.setText("");
-       zleceniodawcaGUI.tTelefonStacjonarny.setText("");
+        zleceniodawcaGUI.tTelefonStacjonarny.setText("");
         zleceniodawcaGUI.tTelefonKomorkowy.setText("");
         zleceniodawcaGUI.aPelnaNazwaZleceniodawcy.setText("");
 
