@@ -40,7 +40,7 @@ public class Logowanie extends JFrame {
         this.javaMailSender = javaMailSender;
         this.glowna = glowna;
         this.zlecenieGUI = zlecenieGUI;
-        setSize(400, 300);
+        setSize(400, 350);
         setLocationRelativeTo(null);
         setLayout(null);
 
@@ -76,28 +76,28 @@ public class Logowanie extends JFrame {
 
         StworzHaslo(pHaslo, 150, 100, 100, 20);
 
-        StworzPrzycisk(bWyslij, "wyslij", 50, 150, 100, 20);
+        StworzPrzycisk(bWyslij, "wyslij", 50, 200, 100, 20);
         bWyslij.setVisible(true);
-        StworzPrzycisk(bZaloguj, "zaloguj", 50, 150, 100, 20);
+        StworzPrzycisk(bZaloguj, "zaloguj", 50, 200, 100, 20);
         bZaloguj.setVisible(false);
 
-        StworzPrzycisk(bRejestruj, "rejestruj", 150, 150, 100, 20);
+        StworzPrzycisk(bRejestruj, "rejestruj", 150, 200, 100, 20);
         bRejestruj.addActionListener(e -> {
             if (rejestruj != null) {
                 rejestruj.Czysc();
                 rejestruj.setVisible(true);
             }
         });
-        StworzPrzycisk(bResetuj, "rejestruj", 250, 150, 100, 20);
+        StworzPrzycisk(bResetuj, "rejestruj", 250, 200, 100, 20);
         bResetuj.addActionListener(e -> {
             ResetujGUI resetujGUI = new ResetujGUI(personRepository, javaMailSender,passwordEncoder);
             resetujGUI.setVisible(true);
         });
 
-        StowrzNapis(lLightDarkMode, "tryb", 20, 200, 130,20);
-        StworzPrzycisk(bLightMode, "lightButton", 150,200,100,20);
+        StowrzNapis(lLightDarkMode, "tryb", 20, 250, 130,20);
+        StworzPrzycisk(bLightMode, "lightButton", 150,250,100,20);
         bLightMode.setVisible(true);
-        StworzPrzycisk(bDarkMode, "darkButton", 250,200,100,20);
+        StworzPrzycisk(bDarkMode, "darkButton", 250,250,100,20);
         bDarkMode.setVisible(true);
 
         bWyslij.addActionListener(e -> {
@@ -112,14 +112,12 @@ public class Logowanie extends JFrame {
                     WyslijMail(person.getMail());
                     revalidate();
                     repaint();
-
                     bWyslij.setVisible(false);
+                    bZaloguj.setVisible(true);
+                    StowrzNapis(lKodPotwierdzajacy, "kod", 50, 150, 100, 20);
+                    StworzWpis(tKodPotwierdzajacy, 150, 150, 100, 20);
                     lKodPotwierdzajacy.setVisible(true);
                     tKodPotwierdzajacy.setVisible(true);
-                    bZaloguj.setVisible(true);
-                    StowrzNapis(lKodPotwierdzajacy, "kod", 50, 70, 100, 20);
-                    StworzWpis(tKodPotwierdzajacy, 150, 70, 100, 20);
-
 
                 } else {
                     System.out.println("Haslo to "+Haslo);
