@@ -19,14 +19,14 @@ public class Zlecenie {
     private String Wady;
     private String Uwagi;
     private String Zakonczenie;
-
+    private String Status;
 
     public Zlecenie()
     {
 
     }
     @SuppressWarnings("unused")
-    public Zlecenie(int id, int numer, String zleceniodawca, String przyjecie, String urzadzenie, String marka, String model, String seryjny, String usterka, String wady, String uwagi, String zakonczenie) {
+    public Zlecenie(int id, int numer, String zleceniodawca, String przyjecie, String urzadzenie, String marka, String model, String seryjny, String usterka, String wady, String uwagi, String zakonczenie, String status) {
         Id = id;
         this.numer = numer;
         Zleceniodawca = zleceniodawca;
@@ -39,6 +39,7 @@ public class Zlecenie {
         Wady = wady;
         Uwagi = uwagi;
         Zakonczenie = zakonczenie;
+        Status = status;
     }
     @SuppressWarnings("unused")
     public int getId() {
@@ -136,4 +137,6 @@ public class Zlecenie {
     public void setZakonczenie(String zakonczenie) {
         Zakonczenie = zakonczenie;
     }
+    public String getStatus(){return Status;}
+    public void setStatus(String status){Status = status;}
 }

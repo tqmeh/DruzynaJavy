@@ -24,8 +24,8 @@ public class ZlecenieGUI extends JFrame {
      JButton bWybierzZleceniodawce,bZapisz,bWyjdz,bCzysc,bEdytuj;
     JPanel panel1,panel2,panel3,panel4,panel5;
     JTabbedPane zakladka1;
-    JLabel lZleceniodawca,lUrzadzenie,lModel,lNumerSeryjny,lDataPrzyjecia,lMarka,lOpisUsterki,lWady,lUwagiSerwisanta,lDataZakonczenia;
-    LimitowanyText tZleceniadawca,tUrzadzenie,tModel,tNumerSeryjny,tMarka;
+    JLabel lZleceniodawca,lUrzadzenie,lModel,lNumerSeryjny,lDataPrzyjecia,lMarka,lOpisUsterki,lWady,lUwagiSerwisanta,lDataZakonczenia, lStatusZlecenia;
+    LimitowanyText tZleceniadawca,tUrzadzenie,tModel,tNumerSeryjny,tMarka, tStatusZlecenia;
     LimitowanyTextArea aOpisUsterki,aWady,aUwagiSerwisanta;
     JScrollPane scroll;
 
@@ -35,7 +35,7 @@ public class ZlecenieGUI extends JFrame {
     JDateChooser WybierzDateZakonczenia=new JDateChooser();
     JDateChooser DodajElement=new JDateChooser();
     JTable table;
-    String Zleceniodawca,Urzadzenie,Marka,Model,NumerSeryjny,OpisUsterki,ZauwazoneWadyUrzadzenia,UwagiSerwisanta,DataPrzyjeciaZlecenia,DataZakonczeniaZlecenia;
+    String Zleceniodawca,Urzadzenie,Marka,Model,NumerSeryjny,OpisUsterki,ZauwazoneWadyUrzadzenia,UwagiSerwisanta,DataPrzyjeciaZlecenia,DataZakonczeniaZlecenia, Status;
     String Zleceniodawcahasz,Urzadzeniehasz,Markahasz,Modelhasz,NumerSeryjnyhasz,OpisUsterkihasz,ZauwazoneWadyUrzadzeniahasz,UwagiSerwisantahasz;
       WybierzZleceniodawceGUI wybierzZleceniodawceGUI;
       ZlecenieRepository zlecenieRepository;
@@ -151,11 +151,13 @@ int Numer1;
         lDataPrzyjecia=new JLabel();
         lOpisUsterki=new JLabel();
         lDataZakonczenia=new JLabel();
+        lStatusZlecenia=new JLabel();
         tZleceniadawca=new LimitowanyText(20,false);
         tUrzadzenie=new LimitowanyText(30,false);
         tMarka=new LimitowanyText(30,false);
         tModel=new LimitowanyText(40,false);
         tNumerSeryjny=new LimitowanyText(40, false);
+        tStatusZlecenia =new LimitowanyText(30,false);
 
 
 
@@ -168,14 +170,16 @@ int Numer1;
         WysweitlNapis(lModel,"model",50,140,100,20,panel);
         WysweitlNapis(lNumerSeryjny,"seryjny",50,170,100,20,panel);
         WysweitlNapis(lDataPrzyjecia,"dataPrzyjecia",50,200,100,20,panel);
-        WysweitlNapis(lOpisUsterki,"opisUsterki",50,250,100,20,panel);
+        WysweitlNapis(lOpisUsterki,"opisUsterki",50,270,100,20,panel);
         WysweitlNapis(lDataZakonczenia,"dataZakonczenia",400,200,100,20,panel);
+        WysweitlNapis(lStatusZlecenia, "status", 50, 230,100,20,panel);
 
         WpiszTekst(tZleceniadawca,150,50,150,20,panel);
         WpiszTekst(tUrzadzenie,150,80,150,20,panel);
         WpiszTekst(tMarka,150,110,150,20,panel);
         WpiszTekst(tModel,150,140,150,20,panel);
         WpiszTekst(tNumerSeryjny,150,170,150,20,panel);
+        WpiszTekst(tStatusZlecenia, 150,230,150,20,panel);
 
         StworzPrzyckiskzDanymi(bWybierzZleceniodawce,"wybierzZleceniodawce",310,50,150,20,panel);
         bWybierzZleceniodawce.addActionListener(e -> {
@@ -193,7 +197,7 @@ int Numer1;
         aOpisUsterki.setCaretPosition(0);
 
         scroll=new JScrollPane(aOpisUsterki);
-        scroll.setBounds(50,270,400,200);
+        scroll.setBounds(50,290,400,200);
         panel.add(scroll);
 
 
@@ -303,6 +307,7 @@ int Numer1;
             tModel.setText(" ");
             tNumerSeryjny.setText(" ");
             aOpisUsterki.setText(" ");
+            tStatusZlecenia.setText(" ");
         });
     }
     public void Wyjdz(JButton button)
@@ -321,6 +326,8 @@ int Numer1;
         OpisUsterki=aOpisUsterki.getText().trim();
         ZauwazoneWadyUrzadzenia=aWady.getText().trim();
         UwagiSerwisanta=aUwagiSerwisanta.getText().trim();
+        Status=tStatusZlecenia.getText().trim();
+
         System.out.println(Zleceniodawca);
         System.out.println(Urzadzenie);
         System.out.println(Marka);
@@ -329,6 +336,7 @@ int Numer1;
         System.out.println(OpisUsterki);
         System.out.println(ZauwazoneWadyUrzadzenia);
         System.out.println(UwagiSerwisanta);
+        System.out.println(Status);
         PobierzDate();
         System.out.println("Data rozpoczecia to"+DataPrzyjeciaZlecenia);
 
@@ -417,6 +425,7 @@ int Numer1;
             istniejacy.setWady(ZauwazoneWadyUrzadzeniahasz);
             istniejacy.setUwagi(UwagiSerwisantahasz);
             istniejacy.setZakonczenie(DataZakonczeniaZlecenia);
+            istniejacy.setStatus(Status);
             zlecenieRepository.save(istniejacy);
         }
         else {
@@ -431,6 +440,7 @@ int Numer1;
             zlecenie.setUsterka(OpisUsterkihasz);
             zlecenie.setWady(ZauwazoneWadyUrzadzeniahasz);
             zlecenie.setUwagi(UwagiSerwisantahasz);
+            zlecenie.setStatus(Status);
             zlecenie.setZakonczenie(DataZakonczeniaZlecenia);
             System.out.println("Data ktora wysylana jest do bazy danych to "+zlecenie.getZakonczenie());
             zlecenieRepository.save(zlecenie);
@@ -629,6 +639,4 @@ int Numer1;
                 JOptionPane.ERROR_MESSAGE
         );
     }
-
-
 }

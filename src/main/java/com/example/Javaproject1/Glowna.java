@@ -158,7 +158,7 @@ public class Glowna extends JFrame {
     public void UtworzTabele()
     {
         List<Zlecenie> zlecenie=zlecenieRepository.findAll();
-        Object[][] dane=new Object[zlecenie.size()][11];
+        Object[][] dane=new Object[zlecenie.size()][12];
         for(int i=0;i<zlecenie.size();i++)
         {
             Zlecenie zlecenie1=zlecenie.get(i);
@@ -173,6 +173,7 @@ public class Glowna extends JFrame {
             dane[i][8]=encryptionService.decrypt(zlecenie1.getWady());
             dane[i][9]=encryptionService.decrypt(zlecenie1.getUwagi());
             dane[i][10]=zlecenie1.getZakonczenie();
+            dane[i][11]=zlecenie1.getStatus();
         }
         String[] NazwyKolumn={
                 KontrolerJezyka.resourceBundle.getString("numer"),
@@ -185,7 +186,8 @@ public class Glowna extends JFrame {
                 KontrolerJezyka.resourceBundle.getString("usterka"),
                 KontrolerJezyka.resourceBundle.getString("wady"),
                 KontrolerJezyka.resourceBundle.getString("uwagi"),
-                KontrolerJezyka.resourceBundle.getString("zakonczono")
+                KontrolerJezyka.resourceBundle.getString("zakonczono"),
+                KontrolerJezyka.resourceBundle.getString("status")
         };
         DefaultTableModel model=new DefaultTableModel(dane,NazwyKolumn);
         tTabela.setModel(model);

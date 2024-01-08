@@ -121,7 +121,7 @@ public class Logowanie extends JFrame {
 
                 } else {
                     System.out.println("Haslo to "+Haslo);
-                    WyswietlKomunikatoBledzie("Błędne hasło");
+                    WyswietlKomunikatoBledzie("bledneHaslo");
 
                 }
             } else {
