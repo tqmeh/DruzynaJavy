@@ -96,7 +96,7 @@ int Numer1;
     public JPanel StworzPanel1()
     {
         JPanel panel=new JPanel();
-        panel.setBackground(Color.red);
+        //panel.setBackground(Color.red);
         panel.setPreferredSize(new Dimension(100,100));
         add(panel,BorderLayout.WEST);
 
@@ -133,7 +133,7 @@ int Numer1;
     public JPanel StworzPanel2()
     {
         JPanel panel=new JPanel();
-        panel.setBackground(Color.blue);
+        //panel.setBackground(Color.blue);
         panel.setPreferredSize(new Dimension(100, 100));
         add(panel, BorderLayout.NORTH);
         return panel;
@@ -141,7 +141,7 @@ int Numer1;
     public JPanel StworzPanel3()
     {
         JPanel panel = new JPanel();
-        panel.setBackground(Color.ORANGE);
+        //panel.setBackground(Color.white);
         panel.setLayout(null);
         lZleceniodawca=new JLabel();
         lUrzadzenie=new JLabel();
@@ -211,7 +211,7 @@ int Numer1;
     public JPanel StworzPanel4()
     {
         JPanel panel = new JPanel();
-        panel.setBackground(Color.GREEN);
+        //panel.setBackground(Color.GREEN);
         panel.setLayout(null);
         lWady=new JLabel();
         lUwagiSerwisanta=new JLabel();
@@ -247,7 +247,7 @@ int Numer1;
 
 
         JPanel panel = new JPanel();
-        panel.setBackground(Color.GREEN);
+        //panel.setBackground(Color.GREEN);
 
         // Domyślny model danych
         String[] NazwaKolumn = {

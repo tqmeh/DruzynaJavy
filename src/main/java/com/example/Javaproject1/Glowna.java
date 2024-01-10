@@ -1,5 +1,7 @@
 package com.example.Javaproject1;
 
+import com.formdev.flatlaf.FlatDarkLaf;
+import com.formdev.flatlaf.FlatLightLaf;
 import org.springframework.stereotype.Component;
 
 import javax.swing.*;
@@ -11,7 +13,9 @@ import java.util.List;
 @Component
 public class Glowna extends JFrame {
     JPanel panel1,panel2,panel3;
-    JButton bNowy,bSprawdz,bOdswiez,bEdytuj;
+    JButton bNowy,bSprawdz,bOdswiez,bEdytuj, bFiltruj;
+    JLabel lFiltruj;
+    JTextField tFiltruj;
      NumerRepository numerRepository;
 
     WybierzZleceniodawceGUI wybierzZleceniodawceGUI;
@@ -24,9 +28,15 @@ public class Glowna extends JFrame {
     int Numer;
 
     int ID;
-    public Glowna(NumerRepository numerRepository,WybierzZleceniodawceGUI wybierzZleceniodawceGUI, ZlecenieRepository zlecenieRepository,PodsumowanieRepository podsumowanieRepository,EncryptionService encryptionService)
-    {
+    public Glowna(NumerRepository numerRepository,WybierzZleceniodawceGUI wybierzZleceniodawceGUI, ZlecenieRepository zlecenieRepository,PodsumowanieRepository podsumowanieRepository,EncryptionService encryptionService) throws UnsupportedLookAndFeelException {
 
+        //Force zmiana LookAndFeel na Głównej, nie wiem czemu nie aktualizauje się
+        // automatycznie po naciśnięciu przycisku
+        if(DarkModeHandler.darkmode==true){
+            UIManager.setLookAndFeel(new FlatDarkLaf());
+        } else {
+            UIManager.setLookAndFeel(new FlatLightLaf());
+        }
         this.numerRepository=numerRepository;
         this.wybierzZleceniodawceGUI=wybierzZleceniodawceGUI;
         this.zlecenieRepository=zlecenieRepository;
@@ -54,7 +64,7 @@ public class Glowna extends JFrame {
     public JPanel StworzPanel1()
     {
         JPanel panel=new JPanel();
-        panel.setBackground(Color.red);
+        //panel.setBackground(Color.red);
         panel.setPreferredSize(new Dimension(100,100));
         add(panel,BorderLayout.WEST);
 
@@ -62,6 +72,10 @@ public class Glowna extends JFrame {
         bNowy=new JButton();
         bOdswiez=new JButton();
         bEdytuj=new JButton();
+        lFiltruj=new JLabel();
+        tFiltruj=new JTextField();
+        bFiltruj=new JButton();
+
 
         StworzPrzycisk(bNowy,"noweZlecenie",100,20,panel);
         bNowy.addActionListener(e -> {
@@ -84,8 +98,15 @@ public class Glowna extends JFrame {
         StworzPrzycisk(bEdytuj,"edytuj",100,20,panel);
         bEdytuj.addActionListener(e ->
             EdytujiWyczysc()
+        );
 
-
+        //Dodanie JLabel dla Filtrowania
+        lFiltruj=new JLabel(KontrolerJezyka.resourceBundle.getString("jezyk")+":");
+        //lFiltruj.setBounds(80,200,20,10);
+        add(lFiltruj);
+        StworzPrzycisk(bFiltruj, "filtruj", 100,20,panel);
+        bFiltruj.addActionListener(e ->
+                FiltrujZlecenia()
         );
         return panel;
 
@@ -93,7 +114,7 @@ public class Glowna extends JFrame {
     public JPanel StworzPanel2()
     {
         JPanel panel=new JPanel();
-        panel.setBackground(Color.blue);
+        //panel.setBackground(Color.blue);
         panel.setPreferredSize(new Dimension(100, 100));
         add(panel, BorderLayout.NORTH);
         return panel;
@@ -101,7 +122,7 @@ public class Glowna extends JFrame {
     public JPanel StworzPanel3()
     {
         JPanel panel=new JPanel();
-        panel.setBackground(Color.orange);
+        //panel.setBackground(Color.orange);
         panel.setLayout(new BorderLayout());
         add(panel,BorderLayout.CENTER);
 
@@ -222,8 +243,12 @@ public class Glowna extends JFrame {
     }
 
 
-
-
-
+    public void FiltrujZlecenia() {
+        UtworzTabele();
+    }
+    //Tutaj powinno być zapytanie do bazy, w stylu
+    //SELECT * from 'zlecenie' WHERE Status LIKE 'pobranieInputuZTextFielda'
+    //Uzytkownik powinien sam wpisac co chce znalezc
+    //Chyba nie ma potrzeby robienia tego na pre-definiowanych opcjach.
     }
 
