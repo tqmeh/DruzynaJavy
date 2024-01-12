@@ -136,4 +136,38 @@ public class Zleceniodawca {
     public void setKomorkowy(String komorkowy) {
         this.komorkowy = komorkowy;
     }
+
+    @Override
+    public String toString() {
+        return "Zleceniodawca{"
+                + Id
+                 + nazwa + '\''
+                 + pelna + '\'' +
+                 miasto + '\'' +
+                 kod + '\'' +
+                 ulica + '\'' +
+                  dom + '\'' +
+                 mieszkanie + '\'' +
+                 kraj + '\'' +
+                 nip + '\'' +
+                 stacjonarny + '\'' +
+                 komorkowy + '\'' +
+                '}';
+    }
+
+
+    public String daneZleceniodawcy(EncryptionService encryptionService) {
+        return "Zleceniodawca:\n" +
+                " nazwa: " + encryptionService.decrypt(nazwa) + '\n' +
+                "pelna nazwa:" + encryptionService.decrypt(pelna )+ '\n' +
+                "miasto:" + encryptionService.decrypt(miasto )+ '\n' +
+                "kod:" + encryptionService.decrypt(kod) + '\n' +
+                "ulica: " + encryptionService.decrypt(ulica) + '\n' +
+                "dom:" + encryptionService.decrypt(dom) + '\n' +
+                "mieszkanie: " + encryptionService.decrypt(mieszkanie) + '\n' +
+                "kraj: " + encryptionService.decrypt(kraj) + '\n' +
+                "nip: " + encryptionService.decrypt(nip) + '\n' +
+                "stacjonarny: " + encryptionService.decrypt(stacjonarny) + '\n' +
+                "komorkowy: " + encryptionService.decrypt(komorkowy) + '\n';
+    }
 }

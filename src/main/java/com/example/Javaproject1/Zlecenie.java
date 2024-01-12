@@ -9,7 +9,7 @@ public class Zlecenie {
     private int Id;
 
     private int numer;
-    private String Zleceniodawca;
+    private String zleceniodawca;
     private String Przyjecie;
     private  String Urzadzenie;
     private String Marka;
@@ -29,7 +29,7 @@ public class Zlecenie {
     public Zlecenie(int id, int numer, String zleceniodawca, String przyjecie, String urzadzenie, String marka, String model, String seryjny, String usterka, String wady, String uwagi, String zakonczenie, String status) {
         Id = id;
         this.numer = numer;
-        Zleceniodawca = zleceniodawca;
+        this.zleceniodawca = zleceniodawca;
         Przyjecie = przyjecie;
         Urzadzenie = urzadzenie;
         Marka = marka;
@@ -59,11 +59,11 @@ public class Zlecenie {
     }
 
     public String getZleceniodawca() {
-        return Zleceniodawca;
+        return zleceniodawca;
     }
 
     public void setZleceniodawca(String zleceniodawca) {
-        Zleceniodawca = zleceniodawca;
+        this.zleceniodawca = zleceniodawca;
     }
 
     public String getPrzyjecie() {
@@ -139,4 +139,23 @@ public class Zlecenie {
     }
     public String getStatus(){return Status;}
     public void setStatus(String status){Status = status;}
+
+    @Override
+    public String toString() {
+        return "Zlecenie{" +
+                "Id=" + Id +
+                ", numer=" + numer +
+                ", Zleceniodawca='" + zleceniodawca + '\'' +
+                ", Przyjecie='" + Przyjecie + '\'' +
+                ", Urzadzenie='" + Urzadzenie + '\'' +
+                ", Marka='" + Marka + '\'' +
+                ", Model='" + Model + '\'' +
+                ", Seryjny='" + Seryjny + '\'' +
+                ", Usterka='" + Usterka + '\'' +
+                ", Wady='" + Wady + '\'' +
+                ", Uwagi='" + Uwagi + '\'' +
+                ", Zakonczenie='" + Zakonczenie + '\'' +
+                ", Status='" + Status + '\'' +
+                '}';
+    }
 }

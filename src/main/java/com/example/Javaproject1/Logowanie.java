@@ -102,7 +102,6 @@ public class Logowanie extends JFrame {
 
         bWyslij.addActionListener(e -> {
             Pobierz();
-
             Optional<Person> optionalPerson = personRepository.findByLogin(Login);
             if (optionalPerson.isPresent()) {
                 Person person = optionalPerson.get();
@@ -269,7 +268,7 @@ public class Logowanie extends JFrame {
         message.setSubject(KontrolerJezyka.resourceBundle.getString("kodAutoryzacji"));
         message.setText(KontrolerJezyka.resourceBundle.getString("tekstMaila")+kodprzykladowy+""); // Treść wiadomości
 
-        javaMailSender.send(message);
+       javaMailSender.send(message);
     }
 
     public static String GenerujKod()

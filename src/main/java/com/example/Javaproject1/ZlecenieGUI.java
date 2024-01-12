@@ -1,4 +1,5 @@
 package com.example.Javaproject1;
+
 import com.toedter.calendar.JDateChooser;
 
 
@@ -6,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -20,69 +22,67 @@ import java.util.List;
 public class ZlecenieGUI extends JFrame {
 
 
-
-     JButton bWybierzZleceniodawce,bZapisz,bWyjdz,bCzysc,bEdytuj;
-    JPanel panel1,panel2,panel3,panel4,panel5;
+    JButton bWybierzZleceniodawce, bZapisz, bWyjdz, bCzysc, bEdytuj;
+    JPanel panel1, panel2, panel3, panel4, panel5;
     JTabbedPane zakladka1;
-    JLabel lZleceniodawca,lUrzadzenie,lModel,lNumerSeryjny,lDataPrzyjecia,lMarka,lOpisUsterki,lWady,lUwagiSerwisanta,lDataZakonczenia, lStatusZlecenia;
-    LimitowanyText tZleceniadawca,tUrzadzenie,tModel,tNumerSeryjny,tMarka, tStatusZlecenia;
-    LimitowanyTextArea aOpisUsterki,aWady,aUwagiSerwisanta;
+    JLabel lZleceniodawca, lUrzadzenie, lModel, lNumerSeryjny, lDataPrzyjecia, lMarka, lOpisUsterki, lWady, lUwagiSerwisanta, lDataZakonczenia, lStatusZlecenia;
+    LimitowanyText tZleceniadawca, tUrzadzenie, tModel, tNumerSeryjny, tMarka, tStatusZlecenia;
+    LimitowanyTextArea aOpisUsterki, aWady, aUwagiSerwisanta;
     JScrollPane scroll;
 
     Glowna glowna;
 
     JDateChooser WybierzDate = new JDateChooser();
-    JDateChooser WybierzDateZakonczenia=new JDateChooser();
-    JDateChooser DodajElement=new JDateChooser();
+    JDateChooser WybierzDateZakonczenia = new JDateChooser();
+    JDateChooser DodajElement = new JDateChooser();
     JTable table;
-    String Zleceniodawca,Urzadzenie,Marka,Model,NumerSeryjny,OpisUsterki,ZauwazoneWadyUrzadzenia,UwagiSerwisanta,DataPrzyjeciaZlecenia,DataZakonczeniaZlecenia, Status;
-    String Zleceniodawcahasz,Urzadzeniehasz,Markahasz,Modelhasz,NumerSeryjnyhasz,OpisUsterkihasz,ZauwazoneWadyUrzadzeniahasz,UwagiSerwisantahasz;
-      WybierzZleceniodawceGUI wybierzZleceniodawceGUI;
-      ZlecenieRepository zlecenieRepository;
+    String Zleceniodawca, Urzadzenie, Marka, Model, NumerSeryjny, OpisUsterki, ZauwazoneWadyUrzadzenia, UwagiSerwisanta, DataPrzyjeciaZlecenia, DataZakonczeniaZlecenia, Status;
+    String Zleceniodawcahasz, Urzadzeniehasz, Markahasz, Modelhasz, NumerSeryjnyhasz, OpisUsterkihasz, ZauwazoneWadyUrzadzeniahasz, UwagiSerwisantahasz;
+    WybierzZleceniodawceGUI wybierzZleceniodawceGUI;
+    ZlecenieRepository zlecenieRepository;
 
-      JDialog jNoweOknoDialogowe;
-      String dataPrzyjeciaElementu;
-       PodsumowanieRepository podsumowanieRepository;
-        EncryptionService encryptionService;
+    JDialog jNoweOknoDialogowe;
+    String dataPrzyjeciaElementu;
+    PodsumowanieRepository podsumowanieRepository;
+    EncryptionService encryptionService;
     Date wybranydzien;
-int Numer1;
-@Autowired
-    public ZlecenieGUI( WybierzZleceniodawceGUI wybierzZleceniodawceGUI,ZlecenieRepository zlecenieRepository, PodsumowanieRepository podsumowanieRepository,Glowna glowna,EncryptionService encryptionService )
-    {
+    int Numer1;
+
+    @Autowired
+    public ZlecenieGUI(WybierzZleceniodawceGUI wybierzZleceniodawceGUI, ZlecenieRepository zlecenieRepository, PodsumowanieRepository podsumowanieRepository, Glowna glowna, EncryptionService encryptionService) {
 
 
-        this.wybierzZleceniodawceGUI=wybierzZleceniodawceGUI;
-        this.zlecenieRepository=zlecenieRepository;
-        this.podsumowanieRepository=podsumowanieRepository;
-        this.glowna=glowna;
-        this.encryptionService=encryptionService;
+        this.wybierzZleceniodawceGUI = wybierzZleceniodawceGUI;
+        this.zlecenieRepository = zlecenieRepository;
+        this.podsumowanieRepository = podsumowanieRepository;
+        this.glowna = glowna;
+        this.encryptionService = encryptionService;
 
 
         wybierzZleceniodawceGUI.setZlecenieGUI(this);
-        setSize(400,200);
+        setSize(400, 200);
         setExtendedState(MAXIMIZED_BOTH);
         setLayout(new BorderLayout());
-        zakladka1=new JTabbedPane();
+        zakladka1 = new JTabbedPane();
         revalidate();
 
-        panel1=StworzPanel1();
-        panel2=StworzPanel2();
-        panel3=StworzPanel3();
-        panel4=StworzPanel4();
-        panel5=StworzPanel5();
+        panel1 = StworzPanel1();
+        panel2 = StworzPanel2();
+        panel3 = StworzPanel3();
+        panel4 = StworzPanel4();
+        panel5 = StworzPanel5();
 
-        zakladka1.addTab(KontrolerJezyka.resourceBundle.getString("przyjecieUrzadzenia"),null,panel3);
-        zakladka1.addTab(KontrolerJezyka.resourceBundle.getString("widzoczneWadyUrzadzenia"),null,panel4);
-        zakladka1.addTab(KontrolerJezyka.resourceBundle.getString("podsumowanie"),null,panel5);
+        zakladka1.addTab(KontrolerJezyka.resourceBundle.getString("przyjecieUrzadzenia"), null, panel3);
+        zakladka1.addTab(KontrolerJezyka.resourceBundle.getString("widzoczneWadyUrzadzenia"), null, panel4);
+        zakladka1.addTab(KontrolerJezyka.resourceBundle.getString("podsumowanie"), null, panel5);
 
         add(zakladka1, BorderLayout.CENTER);
         zakladka1.addChangeListener(e -> {
-            if(zakladka1.getSelectedIndex()==2) {
+            if (zakladka1.getSelectedIndex() == 2) {
                 panel1.add(bEdytuj);
                 panel1.revalidate();
                 panel1.repaint();
-            }
-            else {
+            } else {
                 panel1.remove(bEdytuj);
 
             }
@@ -91,24 +91,23 @@ int Numer1;
         });
 
 
-
     }
-    public JPanel StworzPanel1()
-    {
-        JPanel panel=new JPanel();
+
+    public JPanel StworzPanel1() {
+        JPanel panel = new JPanel();
         panel.setBackground(Color.red);
-        panel.setPreferredSize(new Dimension(100,100));
-        add(panel,BorderLayout.WEST);
+        panel.setPreferredSize(new Dimension(100, 100));
+        add(panel, BorderLayout.WEST);
 
-        bCzysc=new JButton();
-        bEdytuj=new JButton();
-        bWyjdz=new JButton();
-        bZapisz=new JButton();
+        bCzysc = new JButton();
+        bEdytuj = new JButton();
+        bWyjdz = new JButton();
+        bZapisz = new JButton();
 
-        StworzPrzycisk(bEdytuj,"dodaj",100,20,panel);
-        StworzPrzycisk(bZapisz,"zapisz",100,20,panel);
-        StworzPrzycisk(bCzysc,"czysc",100,20,panel);
-        StworzPrzycisk(bWyjdz,"wyjdz",100,20,panel);
+        StworzPrzycisk(bEdytuj, "dodaj", 100, 20, panel);
+        StworzPrzycisk(bZapisz, "zapisz", 100, 20, panel);
+        StworzPrzycisk(bCzysc, "czysc", 100, 20, panel);
+        StworzPrzycisk(bWyjdz, "wyjdz", 100, 20, panel);
 
 
         Czysc(bCzysc);
@@ -119,130 +118,123 @@ int Numer1;
             PobierzDanezZlecenia();
 
             Szyfruj();
-        PobierzzPodsumowania();
-        Sprawdz();
+            PobierzzPodsumowania();
+            Sprawdz();
         });
 
         bEdytuj.addActionListener(e -> {
-            jNoweOknoDialogowe=new JDialog();
+            jNoweOknoDialogowe = new JDialog();
             StworzDodawanieDoTabeli();
         });
 
         return panel;
     }
-    public JPanel StworzPanel2()
-    {
-        JPanel panel=new JPanel();
+
+    public JPanel StworzPanel2() {
+        JPanel panel = new JPanel();
         panel.setBackground(Color.blue);
         panel.setPreferredSize(new Dimension(100, 100));
         add(panel, BorderLayout.NORTH);
         return panel;
     }
-    public JPanel StworzPanel3()
-    {
+
+    public JPanel StworzPanel3() {
         JPanel panel = new JPanel();
         panel.setBackground(Color.ORANGE);
         panel.setLayout(null);
-        lZleceniodawca=new JLabel();
-        lUrzadzenie=new JLabel();
-        lMarka=new JLabel();
-        lModel=new JLabel();
-        lNumerSeryjny=new JLabel();
-        lDataPrzyjecia=new JLabel();
-        lOpisUsterki=new JLabel();
-        lDataZakonczenia=new JLabel();
-        lStatusZlecenia=new JLabel();
-        tZleceniadawca=new LimitowanyText(20,false);
-        tUrzadzenie=new LimitowanyText(30,false);
-        tMarka=new LimitowanyText(30,false);
-        tModel=new LimitowanyText(40,false);
-        tNumerSeryjny=new LimitowanyText(40, false);
-        tStatusZlecenia =new LimitowanyText(30,false);
+        lZleceniodawca = new JLabel();
+        lUrzadzenie = new JLabel();
+        lMarka = new JLabel();
+        lModel = new JLabel();
+        lNumerSeryjny = new JLabel();
+        lDataPrzyjecia = new JLabel();
+        lOpisUsterki = new JLabel();
+        lDataZakonczenia = new JLabel();
+        lStatusZlecenia = new JLabel();
+        tZleceniadawca = new LimitowanyText(20, false);
+        tUrzadzenie = new LimitowanyText(30, false);
+        tMarka = new LimitowanyText(30, false);
+        tModel = new LimitowanyText(40, false);
+        tNumerSeryjny = new LimitowanyText(40, false);
+        tStatusZlecenia = new LimitowanyText(30, false);
 
 
+        bWybierzZleceniodawce = new JButton();
 
-        bWybierzZleceniodawce=new JButton();
 
+        WysweitlNapis(lZleceniodawca, "zleceniodawca", 50, 50, 100, 20, panel);
+        WysweitlNapis(lUrzadzenie, "urzadzenie", 50, 80, 100, 20, panel);
+        WysweitlNapis(lMarka, "marka", 50, 110, 100, 20, panel);
+        WysweitlNapis(lModel, "model", 50, 140, 100, 20, panel);
+        WysweitlNapis(lNumerSeryjny, "seryjny", 50, 170, 100, 20, panel);
+        WysweitlNapis(lDataPrzyjecia, "dataPrzyjecia", 50, 200, 100, 20, panel);
+        WysweitlNapis(lOpisUsterki, "opisUsterki", 50, 270, 100, 20, panel);
+        WysweitlNapis(lDataZakonczenia, "dataZakonczenia", 400, 200, 100, 20, panel);
+        WysweitlNapis(lStatusZlecenia, "status", 50, 230, 100, 20, panel);
 
-        WysweitlNapis(lZleceniodawca,"zleceniodawca",50,50,100,20,panel);
-        WysweitlNapis(lUrzadzenie,"urzadzenie",50,80,100,20,panel);
-        WysweitlNapis(lMarka,"marka",50,110,100,20,panel);
-        WysweitlNapis(lModel,"model",50,140,100,20,panel);
-        WysweitlNapis(lNumerSeryjny,"seryjny",50,170,100,20,panel);
-        WysweitlNapis(lDataPrzyjecia,"dataPrzyjecia",50,200,100,20,panel);
-        WysweitlNapis(lOpisUsterki,"opisUsterki",50,270,100,20,panel);
-        WysweitlNapis(lDataZakonczenia,"dataZakonczenia",400,200,100,20,panel);
-        WysweitlNapis(lStatusZlecenia, "status", 50, 230,100,20,panel);
+        WpiszTekst(tZleceniadawca, 150, 50, 150, 20, panel);
+        WpiszTekst(tUrzadzenie, 150, 80, 150, 20, panel);
+        WpiszTekst(tMarka, 150, 110, 150, 20, panel);
+        WpiszTekst(tModel, 150, 140, 150, 20, panel);
+        WpiszTekst(tNumerSeryjny, 150, 170, 150, 20, panel);
+        WpiszTekst(tStatusZlecenia, 150, 230, 150, 20, panel);
 
-        WpiszTekst(tZleceniadawca,150,50,150,20,panel);
-        WpiszTekst(tUrzadzenie,150,80,150,20,panel);
-        WpiszTekst(tMarka,150,110,150,20,panel);
-        WpiszTekst(tModel,150,140,150,20,panel);
-        WpiszTekst(tNumerSeryjny,150,170,150,20,panel);
-        WpiszTekst(tStatusZlecenia, 150,230,150,20,panel);
-
-        StworzPrzyckiskzDanymi(bWybierzZleceniodawce,"wybierzZleceniodawce",310,50,150,20,panel);
+        StworzPrzyckiskzDanymi(bWybierzZleceniodawce, "wybierzZleceniodawce", 310, 50, 150, 20, panel);
         bWybierzZleceniodawce.addActionListener(e -> {
-            if(wybierzZleceniodawceGUI !=null)
-            {
+            if (wybierzZleceniodawceGUI != null) {
                 wybierzZleceniodawceGUI.setVisible(true);
             }
         });
 
 
-
-        aOpisUsterki=new LimitowanyTextArea(200);
+        aOpisUsterki = new LimitowanyTextArea(200);
         aOpisUsterki.setWrapStyleWord(true);
         aOpisUsterki.setLineWrap(true);
         aOpisUsterki.setCaretPosition(0);
 
-        scroll=new JScrollPane(aOpisUsterki);
-        scroll.setBounds(50,290,400,200);
+        scroll = new JScrollPane(aOpisUsterki);
+        scroll.setBounds(50, 290, 400, 200);
         panel.add(scroll);
 
 
-
-        WybierzDate.setBounds(150,200,180,20);
+        WybierzDate.setBounds(150, 200, 180, 20);
         panel.add(WybierzDate);
-        WybierzDateZakonczenia.setBounds(500,200,100,20);
+        WybierzDateZakonczenia.setBounds(500, 200, 100, 20);
         panel.add(WybierzDateZakonczenia);
         return panel;
     }
-    public JPanel StworzPanel4()
-    {
+
+    public JPanel StworzPanel4() {
         JPanel panel = new JPanel();
         panel.setBackground(Color.GREEN);
         panel.setLayout(null);
-        lWady=new JLabel();
-        lUwagiSerwisanta=new JLabel();
+        lWady = new JLabel();
+        lUwagiSerwisanta = new JLabel();
 
 
+        WysweitlNapis(lWady, "zauwazoneWadyUrzadzenia", 0, 0, 200, 20, panel);
+        WysweitlNapis(lUwagiSerwisanta, "uwagiSerwisanta", 800, 0, 200, 20, panel);
 
-        WysweitlNapis(lWady,"zauwazoneWadyUrzadzenia",0,0,200,20,panel);
-        WysweitlNapis(lUwagiSerwisanta,"uwagiSerwisanta",800,0,200,20,panel);
-
-        aWady=new LimitowanyTextArea(200);
+        aWady = new LimitowanyTextArea(200);
         aWady.setWrapStyleWord(true);
         aWady.setLineWrap(true);
         aWady.setCaretPosition(0);
-        scroll=new JScrollPane(aWady);
-        scroll.setBounds(0,20,400,200);
+        scroll = new JScrollPane(aWady);
+        scroll.setBounds(0, 20, 400, 200);
         panel.add(scroll);
 
-        aUwagiSerwisanta=new LimitowanyTextArea(200);
+        aUwagiSerwisanta = new LimitowanyTextArea(200);
         aUwagiSerwisanta.setWrapStyleWord(true);
         aUwagiSerwisanta.setLineWrap(true);
         aUwagiSerwisanta.setCaretPosition(0);
-        scroll=new JScrollPane(aUwagiSerwisanta);
-        scroll.setBounds(800,20,400,200);
+        scroll = new JScrollPane(aUwagiSerwisanta);
+        scroll.setBounds(800, 20, 400, 200);
         panel.add(scroll);
-
-
-
 
 
         return panel;
     }
+
     public JPanel StworzPanel5() {
 
 
@@ -266,40 +258,38 @@ int Numer1;
     }
 
 
-    public void StworzPrzycisk(JButton button,String nazwa,int a,int b,JPanel panel)
-    {
-        nazwa=KontrolerJezyka.resourceBundle.getString(nazwa);
-        button.setPreferredSize(new Dimension(a,b));
+    public void StworzPrzycisk(JButton button, String nazwa, int a, int b, JPanel panel) {
+        nazwa = KontrolerJezyka.resourceBundle.getString(nazwa);
+        button.setPreferredSize(new Dimension(a, b));
         button.setText(nazwa);
         panel.add(button);
     }
-    public void StworzPrzyckiskzDanymi(JButton button,String nazwa,int a,int b, int c,int d, JPanel panel)
-    {
-        nazwa=KontrolerJezyka.resourceBundle.getString(nazwa);
+
+    public void StworzPrzyckiskzDanymi(JButton button, String nazwa, int a, int b, int c, int d, JPanel panel) {
+        nazwa = KontrolerJezyka.resourceBundle.getString(nazwa);
         button.setText(nazwa);
-        button.setBounds(a,b,c,d);
+        button.setBounds(a, b, c, d);
         panel.add(button);
     }
-    public void WysweitlNapis(JLabel label,String napis,int a, int b,int c, int d, JPanel panel)
-    {
-        napis=KontrolerJezyka.resourceBundle.getString(napis);
+
+    public void WysweitlNapis(JLabel label, String napis, int a, int b, int c, int d, JPanel panel) {
+        napis = KontrolerJezyka.resourceBundle.getString(napis);
         label.setText(napis);
-        label.setBounds(a,b,c,d);
+        label.setBounds(a, b, c, d);
         panel.add(label);
     }
-    public void WpiszTekst(JTextField text,int a,int b,int c,int d,JPanel panel)
-    {
 
-        text.setBounds(a,b,c,d);
+    public void WpiszTekst(JTextField text, int a, int b, int c, int d, JPanel panel) {
+
+        text.setBounds(a, b, c, d);
         panel.add(text);
     }
-    public void setTZleceniodawca(String text)
-    {
+
+    public void setTZleceniodawca(String text) {
         tZleceniadawca.setText(text);
     }
 
-    public void Czysc(JButton button)
-    {
+    public void Czysc(JButton button) {
         button.addActionListener(e -> {
             tZleceniadawca.setText(" ");
             tUrzadzenie.setText(" ");
@@ -310,23 +300,22 @@ int Numer1;
             tStatusZlecenia.setText(" ");
         });
     }
-    public void Wyjdz(JButton button)
-    {
+
+    public void Wyjdz(JButton button) {
         button.addActionListener(e -> dispose());
     }
 
 
-    public void PobierzDanezZlecenia()
-    {
-        Zleceniodawca=tZleceniadawca.getText();
-        Urzadzenie=tUrzadzenie.getText().trim();
-        Marka=tMarka.getText().trim();
-        Model=tModel.getText().trim();
-        NumerSeryjny=tNumerSeryjny.getText().trim();
-        OpisUsterki=aOpisUsterki.getText().trim();
-        ZauwazoneWadyUrzadzenia=aWady.getText().trim();
-        UwagiSerwisanta=aUwagiSerwisanta.getText().trim();
-        Status=tStatusZlecenia.getText().trim();
+    public void PobierzDanezZlecenia() {
+        Zleceniodawca = tZleceniadawca.getText();
+        Urzadzenie = tUrzadzenie.getText().trim();
+        Marka = tMarka.getText().trim();
+        Model = tModel.getText().trim();
+        NumerSeryjny = tNumerSeryjny.getText().trim();
+        OpisUsterki = aOpisUsterki.getText().trim();
+        ZauwazoneWadyUrzadzenia = aWady.getText().trim();
+        UwagiSerwisanta = aUwagiSerwisanta.getText().trim();
+        Status = tStatusZlecenia.getText().trim();
 
         System.out.println(Zleceniodawca);
         System.out.println(Urzadzenie);
@@ -338,83 +327,64 @@ int Numer1;
         System.out.println(UwagiSerwisanta);
         System.out.println(Status);
         PobierzDate();
-        System.out.println("Data rozpoczecia to"+DataPrzyjeciaZlecenia);
+        System.out.println("Data rozpoczecia to" + DataPrzyjeciaZlecenia);
 
-       if(WybierzDateZakonczenia.getDate() !=null) {
-           PobierzDateZakonczenia();
-           System.out.println("SPrawdzam czy dziala w PObierzDanezZlecenia"+ DataZakonczeniaZlecenia);
-       }
+        if (WybierzDateZakonczenia.getDate() != null) {
+            PobierzDateZakonczenia();
+            System.out.println("SPrawdzam czy dziala w PObierzDanezZlecenia" + DataZakonczeniaZlecenia);
+        }
 
-
-
-    }
-    public void Szyfruj()
-    {
-        Zleceniodawcahasz=encryptionService.encrypt(Zleceniodawca);
-        Urzadzeniehasz=encryptionService.encrypt(Urzadzenie);
-        Markahasz=encryptionService.encrypt(Marka);
-        Modelhasz=encryptionService.encrypt(Model);
-        NumerSeryjnyhasz=encryptionService.encrypt(NumerSeryjny);
-        OpisUsterkihasz=encryptionService.encrypt(OpisUsterki);
-        ZauwazoneWadyUrzadzeniahasz=encryptionService.encrypt(ZauwazoneWadyUrzadzenia);
-        UwagiSerwisantahasz=encryptionService.encrypt(UwagiSerwisanta);
 
     }
 
-    public void Sprawdz()
-    {
-        String ZLeceniodawca1=Zleceniodawca;
-        String Urzadzenie1=Urzadzenie;
-        String Marka1=Marka;
-        String Model1=Model;
-        String NumerSeryjny1=NumerSeryjny;
-        String OpisUsterki1=OpisUsterki;
+    public void Szyfruj() {
+        Zleceniodawcahasz = encryptionService.encrypt(Zleceniodawca);
+        Urzadzeniehasz = encryptionService.encrypt(Urzadzenie);
+        Markahasz = encryptionService.encrypt(Marka);
+        Modelhasz = encryptionService.encrypt(Model);
+        NumerSeryjnyhasz = encryptionService.encrypt(NumerSeryjny);
+        OpisUsterkihasz = encryptionService.encrypt(OpisUsterki);
+        ZauwazoneWadyUrzadzeniahasz = encryptionService.encrypt(ZauwazoneWadyUrzadzenia);
+        UwagiSerwisantahasz = encryptionService.encrypt(UwagiSerwisanta);
 
-        if(ZLeceniodawca1.isEmpty())
-        {
+    }
+
+    public void Sprawdz() {
+        String ZLeceniodawca1 = Zleceniodawca;
+        String Urzadzenie1 = Urzadzenie;
+        String Marka1 = Marka;
+        String Model1 = Model;
+        String NumerSeryjny1 = NumerSeryjny;
+        String OpisUsterki1 = OpisUsterki;
+
+        if (ZLeceniodawca1.isEmpty()) {
             WyswietlKomunikatoBledzie("nieWybranoZleceniowadcy");
-        }
-        else if (Urzadzenie1.isEmpty())
-        {
-        WyswietlKomunikatoBledzie("nieWpisanoUrzadzenia");
-        }
-        else if (Marka1.isEmpty())
-        {
+        } else if (Urzadzenie1.isEmpty()) {
+            WyswietlKomunikatoBledzie("nieWpisanoUrzadzenia");
+        } else if (Marka1.isEmpty()) {
             WyswietlKomunikatoBledzie("nieWpisanoMarki");
-        }
-        else if (Model1.isEmpty())
-        {
+        } else if (Model1.isEmpty()) {
             WyswietlKomunikatoBledzie("nieWpisanoModelu");
-        }
-        else if (NumerSeryjny1.isEmpty())
-        {
-         WyswietlKomunikatoBledzie("nieWpisanoSeryjnego");
-        }
-        else if (wybranydzien==null)
-        {
+        } else if (NumerSeryjny1.isEmpty()) {
+            WyswietlKomunikatoBledzie("nieWpisanoSeryjnego");
+        } else if (wybranydzien == null) {
             WyswietlKomunikatoBledzie("nieWybranoDaty");
-        }
-        else if (OpisUsterki1.isEmpty())
-        {
+        } else if (OpisUsterki1.isEmpty()) {
             WyswietlKomunikatoBledzie("nieWpisanoUsterki");
-        }
-        else if (!Zleceniodawca.isEmpty()||!Urzadzenie.isEmpty()||!Marka.isEmpty()||!Model.isEmpty()||!NumerSeryjny.isEmpty()||!DataPrzyjeciaZlecenia.isEmpty()||!OpisUsterki.isEmpty())
-        {
+        } else if (!Zleceniodawca.isEmpty() || !Urzadzenie.isEmpty() || !Marka.isEmpty() || !Model.isEmpty() || !NumerSeryjny.isEmpty() || !DataPrzyjeciaZlecenia.isEmpty() || !OpisUsterki.isEmpty()) {
             WyslijdoBazyZlecenie();
         }
     }
-    public void WyslijdoBazyZlecenie()
-    {
+
+    public void WyslijdoBazyZlecenie() {
 
 
+        Zlecenie zlecenie = new Zlecenie();
 
-        Zlecenie zlecenie=new Zlecenie();
-
-        Optional<Zlecenie> aktualny=zlecenieRepository.findByNumer(glowna.getNumer());
-        if(aktualny.isPresent())
-        {
+        Optional<Zlecenie> aktualny = zlecenieRepository.findByNumer(glowna.getNumer());
+        if (aktualny.isPresent()) {
             System.out.println("Dodaje nowego");
-            Zlecenie istniejacy=aktualny.get();
+            Zlecenie istniejacy = aktualny.get();
             istniejacy.setZleceniodawca(Zleceniodawcahasz);
             istniejacy.setPrzyjecie(DataPrzyjeciaZlecenia);
             istniejacy.setUrzadzenie(Urzadzeniehasz);
@@ -427,8 +397,7 @@ int Numer1;
             istniejacy.setZakonczenie(DataZakonczeniaZlecenia);
             istniejacy.setStatus(Status);
             zlecenieRepository.save(istniejacy);
-        }
-        else {
+        } else {
             System.out.println("edytuje aktualnego");
             zlecenie.setNumer(glowna.getNumer());
             zlecenie.setZleceniodawca(Zleceniodawcahasz);
@@ -442,30 +411,29 @@ int Numer1;
             zlecenie.setUwagi(UwagiSerwisantahasz);
             zlecenie.setStatus(Status);
             zlecenie.setZakonczenie(DataZakonczeniaZlecenia);
-            System.out.println("Data ktora wysylana jest do bazy danych to "+zlecenie.getZakonczenie());
+            System.out.println("Data ktora wysylana jest do bazy danych to " + zlecenie.getZakonczenie());
             zlecenieRepository.save(zlecenie);
         }
     }
 
 
-   public void PobierzDate()
-   {
+    public void PobierzDate() {
 
-            wybranydzien = WybierzDate.getDate();
-           if(wybranydzien!=null) {
-               SimpleDateFormat FormatDaty = new SimpleDateFormat("yyyy-MM-dd");
-               DataPrzyjeciaZlecenia = FormatDaty.format(wybranydzien);
-           }
-   }
-    public void PobierzDateZakonczenia()
-    {
-        Date wybranydzien=WybierzDateZakonczenia.getDate();
-        SimpleDateFormat FormatDaty=new SimpleDateFormat("yyyy-MM-dd");
-        DataZakonczeniaZlecenia=FormatDaty.format(wybranydzien);
-        System.out.println("Data zakonczenia to"+ DataZakonczeniaZlecenia);
+        wybranydzien = WybierzDate.getDate();
+        if (wybranydzien != null) {
+            SimpleDateFormat FormatDaty = new SimpleDateFormat("yyyy-MM-dd");
+            DataPrzyjeciaZlecenia = FormatDaty.format(wybranydzien);
+        }
     }
-    public void StworzDodawanieDoTabeli()
-    {
+
+    public void PobierzDateZakonczenia() {
+        Date wybranydzien = WybierzDateZakonczenia.getDate();
+        SimpleDateFormat FormatDaty = new SimpleDateFormat("yyyy-MM-dd");
+        DataZakonczeniaZlecenia = FormatDaty.format(wybranydzien);
+        System.out.println("Data zakonczenia to" + DataZakonczeniaZlecenia);
+    }
+
+    public void StworzDodawanieDoTabeli() {
 
 
         jNoweOknoDialogowe.setSize(400, 200);
@@ -473,35 +441,35 @@ int Numer1;
         jNoweOknoDialogowe.setVisible(true);
         jNoweOknoDialogowe.setLocationRelativeTo(null);
 
-        JButton bWyjdz,bZapisz;
-        JLabel lData,lElement,lKwota;
-        JTextField tElement,tKwota;
-        lData=new JLabel();
-        lElement=new JLabel();
-        lKwota=new JLabel();
-        tKwota=new JTextField();
-        tElement=new JTextField();
+        JButton bWyjdz, bZapisz;
+        JLabel lData, lElement, lKwota;
+        JTextField tElement, tKwota;
+        lData = new JLabel();
+        lElement = new JLabel();
+        lKwota = new JLabel();
+        tKwota = new JTextField();
+        tElement = new JTextField();
 
         lData.setText(KontrolerJezyka.resourceBundle.getString("data"));
-        lData.setBounds(10,10,100,20);
+        lData.setBounds(10, 10, 100, 20);
 
         lElement.setText(KontrolerJezyka.resourceBundle.getString("wykonanaCzynnosc"));
-        lElement.setBounds(10,40,150,20);
+        lElement.setBounds(10, 40, 150, 20);
 
         lKwota.setText(KontrolerJezyka.resourceBundle.getString("kwota"));
-        lKwota.setBounds(10,70,100,20);
+        lKwota.setBounds(10, 70, 100, 20);
 
-        tElement.setBounds(130,40,100,20);
-        tKwota.setBounds(130,70,100,20);
+        tElement.setBounds(130, 40, 100, 20);
+        tKwota.setBounds(130, 70, 100, 20);
 
-        bWyjdz=new JButton();
+        bWyjdz = new JButton();
         bWyjdz.setText(KontrolerJezyka.resourceBundle.getString("wyjdz"));
-        bWyjdz.setBounds(140,110,100,20);
+        bWyjdz.setBounds(140, 110, 100, 20);
 
-        bZapisz=new JButton();
+        bZapisz = new JButton();
         bZapisz.setText(KontrolerJezyka.resourceBundle.getString("zapisz"));
-        bZapisz.setBounds(30,110,100,20);
-        DodajElement.setBounds(130,10,100,20);
+        bZapisz.setBounds(30, 110, 100, 20);
+        DodajElement.setBounds(130, 10, 100, 20);
 
 
         jNoweOknoDialogowe.add(lData);
@@ -517,45 +485,44 @@ int Numer1;
 
         bZapisz.addActionListener(e -> {// oprogramowanie przycisku zapisz
 
-        String element=tElement.getText();
-        String kwota=tKwota.getText();
+            String element = tElement.getText();
+            String kwota = tKwota.getText();
 
-        Date wybranyDzien=DodajElement.getDate();
-        SimpleDateFormat FormatDaty=new SimpleDateFormat("yyyy-MM-dd");
-        String SformatowanaData=FormatDaty.format(wybranyDzien);
+            Date wybranyDzien = DodajElement.getDate();
+            SimpleDateFormat FormatDaty = new SimpleDateFormat("yyyy-MM-dd");
+            String SformatowanaData = FormatDaty.format(wybranyDzien);
             System.out.println(SformatowanaData);
-        dataPrzyjeciaElementu=SformatowanaData;
+            dataPrzyjeciaElementu = SformatowanaData;
 
-            DefaultTableModel modeltabeli=(DefaultTableModel)table.getModel();
-        modeltabeli.addRow(new Object[]{dataPrzyjeciaElementu,element,kwota});
-        modeltabeli.fireTableDataChanged();
-        jNoweOknoDialogowe.dispose();
+            DefaultTableModel modeltabeli = (DefaultTableModel) table.getModel();
+            modeltabeli.addRow(new Object[]{dataPrzyjeciaElementu, element, kwota});
+            modeltabeli.fireTableDataChanged();
+            jNoweOknoDialogowe.dispose();
         });
 
 
     }
+
     @SuppressWarnings("ForLoopReplaceableByForEach")
-    public void PobierzzPodsumowania()
-    {
-        DefaultTableModel model=(DefaultTableModel) table.getModel();
-        int wiersz=model.getRowCount();
+    public void PobierzzPodsumowania() {
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        int wiersz = model.getRowCount();
 
-        List<Podsumowanie> podsumowanieList=new ArrayList<>();
+        List<Podsumowanie> podsumowanieList = new ArrayList<>();
 
-        for(int i=0;i<wiersz;i++)
-        {
+        for (int i = 0; i < wiersz; i++) {
 
-            Podsumowanie podsumowanie=new Podsumowanie();
-            String data=(String) model.getValueAt(i,0);
-            String wykonany=(String) model.getValueAt(i,1);
+            Podsumowanie podsumowanie = new Podsumowanie();
+            String data = (String) model.getValueAt(i, 0);
+            String wykonany = (String) model.getValueAt(i, 1);
             String kwotaString = model.getValueAt(i, 2).toString();
-            kwotaString=kwotaString.replace(",",  "."); // zamiana przecinka na kropke
-            double kwota=Double.parseDouble(kwotaString);
+            kwotaString = kwotaString.replace(",", "."); // zamiana przecinka na kropke
+            double kwota = Double.parseDouble(kwotaString);
 
 
-            String ZaszyfrowaneWykonane=encryptionService.encrypt(wykonany);
+            String ZaszyfrowaneWykonane = encryptionService.encrypt(wykonany);
 
-            System.out.println("Data "+data+" "+"wykonanie "+wykonany+" "+"kwota "+kwota);
+            System.out.println("Data " + data + " " + "wykonanie " + wykonany + " " + "kwota " + kwota);
             podsumowanie.setNumer(glowna.getNumer());
             podsumowanie.setDataa(data);
             podsumowanie.setWykonane(ZaszyfrowaneWykonane);
@@ -566,9 +533,7 @@ int Numer1;
         }
 
 
-
-        for(int i=0;i<podsumowanieList.size();i++)
-        {
+        for (int i = 0; i < podsumowanieList.size(); i++) {
             Podsumowanie podsumowanie = podsumowanieList.get(i);
             System.out.println("Wysiwetlam liste");
             System.out.println("Data: " + podsumowanie.getDataa() + ", Wykonanie: " + podsumowanie.getWykonane() + ", Kwota: " + podsumowanie.getKwota());
@@ -577,20 +542,20 @@ int Numer1;
         podsumowanieRepository.saveAll(podsumowanieList);
 
     }
-    public void UzupelnijDaneEdycji(Zlecenie zlecenie)
-    {
-       tZleceniadawca.setText(encryptionService.decrypt(zlecenie.getZleceniodawca()));
-       tUrzadzenie.setText(encryptionService.decrypt(zlecenie.getUrzadzenie()));
-       tMarka.setText(encryptionService.decrypt(zlecenie.getMarka()));
-       tModel.setText(encryptionService.decrypt(zlecenie.getModel()));
-       tNumerSeryjny.setText(encryptionService.decrypt(zlecenie.getSeryjny()));
-       aOpisUsterki.setText(encryptionService.decrypt(zlecenie.getUsterka()));
-       aWady.setText(encryptionService.decrypt(zlecenie.getWady()));
-       aUwagiSerwisanta.setText(encryptionService.decrypt(zlecenie.getUwagi()));
+
+    public void UzupelnijDaneEdycji(Zlecenie zlecenie) {
+        tZleceniadawca.setText(encryptionService.decrypt(zlecenie.getZleceniodawca()));
+        tUrzadzenie.setText(encryptionService.decrypt(zlecenie.getUrzadzenie()));
+        tMarka.setText(encryptionService.decrypt(zlecenie.getMarka()));
+        tModel.setText(encryptionService.decrypt(zlecenie.getModel()));
+        tNumerSeryjny.setText(encryptionService.decrypt(zlecenie.getSeryjny()));
+        aOpisUsterki.setText(encryptionService.decrypt(zlecenie.getUsterka()));
+        aWady.setText(encryptionService.decrypt(zlecenie.getWady()));
+        aUwagiSerwisanta.setText(encryptionService.decrypt(zlecenie.getUwagi()));
 
         SimpleDateFormat formaDaty = new SimpleDateFormat("yyyy-MM-dd");
         String dataPrzyejcia = zlecenie.getPrzyjecie();
-        String dataZakonczenia=zlecenie.getZakonczenie();
+        String dataZakonczenia = zlecenie.getZakonczenie();
 
         if (dataPrzyejcia != null && !dataPrzyejcia.isEmpty()) {
             try {
@@ -600,8 +565,7 @@ int Numer1;
                 e.printStackTrace(); //
             }
         }
-        if(dataZakonczenia!=null&&!dataZakonczenia.isEmpty())
-        {
+        if (dataZakonczenia != null && !dataZakonczenia.isEmpty()) {
             try {
                 Date dataZakonczenia1 = formaDaty.parse(dataZakonczenia);
                 WybierzDateZakonczenia.setDate(dataZakonczenia1);
@@ -626,12 +590,12 @@ int Numer1;
         tabelaModel.setRowCount(0);
 
         for (Podsumowanie podsumowanie : dane) {
-            Object[] row = {podsumowanie.getDataa(),encryptionService.decrypt(podsumowanie.getWykonane()), podsumowanie.getKwota()};
+            Object[] row = {podsumowanie.getDataa(), encryptionService.decrypt(podsumowanie.getWykonane()), podsumowanie.getKwota()};
             tabelaModel.addRow(row);
         }
     }
-    public void WyswietlKomunikatoBledzie(String Blad)
-    {
+
+    public void WyswietlKomunikatoBledzie(String Blad) {
         JOptionPane.showMessageDialog(
                 null,
                 KontrolerJezyka.resourceBundle.getString(Blad),

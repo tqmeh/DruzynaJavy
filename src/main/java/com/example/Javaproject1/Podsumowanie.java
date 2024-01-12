@@ -69,4 +69,15 @@ public class Podsumowanie {
     public void setWykonane(String wykonane) {
         Wykonane = wykonane;
     }
+
+    @Override
+    public String toString() {
+        return "Podsumowanie{" +
+                "Id=" + Id +
+                ", numer=" + numer +
+                ", Dataa='" + Dataa + '\'' +
+                ", Wykonane='" + Wykonane + '\'' +
+                ", Kwota=" + Kwota +
+                '}';
+    }
 }

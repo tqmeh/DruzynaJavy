@@ -13,5 +13,8 @@ public interface ZleceniodawcaRepository extends JpaRepository<Zleceniodawca, In
     Optional<Zleceniodawca> findById(int Id);
 
     List<Zleceniodawca>findByPelna(String pelna);
+
+
+
 }
 
