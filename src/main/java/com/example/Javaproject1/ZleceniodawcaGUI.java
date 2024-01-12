@@ -47,7 +47,7 @@ int ID;
     private JPanel stworzPanel1()
     {
         JPanel panel=new JPanel();
-        panel.setBackground(Color.BLACK);
+//        panel.setBackground(Color.BLACK);
         panel.setPreferredSize(new Dimension(100,200));
         add(panel,BorderLayout.WEST);
 
@@ -81,7 +81,7 @@ int ID;
     private JPanel stworzPanel2()
     {
         JPanel panel=new JPanel();
-        panel.setBackground(Color.orange);
+//        panel.setBackground(Color.orange);
         panel.setPreferredSize(new Dimension(100,100));
         add(panel,BorderLayout.NORTH);
 
@@ -90,7 +90,7 @@ int ID;
     private JPanel stworzPanel3()
     {
         JPanel panel=new JPanel();
-        panel.setBackground(Color.red);
+//        panel.setBackground(Color.red);
         add(panel,BorderLayout.CENTER);
         panel.setLayout(null);
         lNazwaSkroconaZleceniodawcy=new JLabel();
